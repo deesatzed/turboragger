@@ -674,7 +674,23 @@ Continue methodology work without expanding scope prematurely:
 - Full verification:
   - `PYTHONPATH=src python3 -m unittest discover -s tests -v`: 78 tests, 0 failures.
 - Benchmark status:
-  - Not yet benchmarked; this branch must produce a saved `artifacts/runs/bge_small_late_interaction_score_fusion_rerank_*.json` artifact before it can affect the leaderboard or current SOTA gap.
+  - Benchmark command exited 0:
+    - `PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_late_interaction_score_fusion_rerank`
+  - Generated `artifacts/runs/bge_small_late_interaction_score_fusion_rerank_20260608T195336Z.json`.
+  - Updated `artifacts/leaderboard.json`.
+  - Test result: `nDCG@10 = 0.36006186813204677`, `Recall@100 = 0.3211863718747774`, 323 queries, 0 failures, runtime `342.137017` seconds.
+  - This branch is rejected because it loses `0.007521174575898848` primary `nDCG@10` and `0.011692210829001792` `Recall@100` versus the current best.
+  - Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+  - Current gap to selected SOTA target remains `0.10231695729205437`.
+  - Current gap from the late-interaction branch to selected SOTA target is `0.10983813186795321`.
+- Full verification after the late-interaction benchmark and docs update:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -v`: 78 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+  - JSON validation exited 0 for the late-interaction rerank run, current-best train/dev GBDT regression score-fusion run, leaderboard, SOTA target, and local model inventory.
+  - Root `git diff --check`: exited 0.
+  - Root `git status --short --ignored` still shows the root project files as untracked locally because root `.git` metadata writes are sandbox-limited; GitHub was pushed through the documented `/private/tmp` staging repo workaround.
+  - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
+  - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
 
 ### 2026-06-08 Continuation - Root Git Initialization Prep
 

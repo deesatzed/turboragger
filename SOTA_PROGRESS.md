@@ -1271,3 +1271,40 @@ Conclusion:
 - It improves `Recall@100` by `0.0008977899914950349` versus the current best branch.
 - It remains `0.1039392351997388` absolute `nDCG@10` below the selected SOTA target.
 - It remains `0.019039235199738824` absolute `nDCG@10` below the official BEIR comparator.
+
+## 2026-06-08 - Late-Interaction Rerank Ablation
+
+Rationale:
+
+- `GOAL.md` identifies late interaction/reranking as a distinct next retrieval-family direction.
+- No complete local cross-encoder/reranker is available, so this branch tests whether BGE-small ONNX token-level MaxSim can improve top-10 ordering over the current local score-fusion candidate pool.
+
+Code path:
+
+- `src/turboragger/late_interaction.py`
+- `scripts/run_nfcorpus_candidate.py`
+
+Command:
+
+```bash
+PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_late_interaction_score_fusion_rerank
+```
+
+Artifact:
+
+- `artifacts/runs/bge_small_late_interaction_score_fusion_rerank_20260608T195336Z.json`
+
+Result:
+
+| Candidate | nDCG@10 | Recall@100 | Runtime seconds | Queries | Failures |
+|---|---:|---:|---:|---:|---:|
+| `bge_small_late_interaction_score_fusion_rerank` | `0.36006186813204677` | `0.3211863718747774` | `342.137017` | 323 | 0 |
+
+Conclusion:
+
+- The branch is not promoted because it reduces both primary and secondary metrics.
+- It loses `0.007521174575898848` absolute `nDCG@10` versus the current best branch.
+- It loses `0.011692210829001792` `Recall@100` versus the current best branch.
+- It remains `0.10983813186795321` absolute `nDCG@10` below the selected SOTA target.
+- It remains `0.02493813186795324` absolute `nDCG@10` below the official BEIR comparator.
+- Late interaction remains a plausible methodology family, but this measured BGE-small token-MaxSim version is not the missing SOTA signal.

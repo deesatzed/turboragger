@@ -2,7 +2,7 @@
 
 ## 2026-06-08 - Add Late-Interaction Rerank Candidate Without Promoting It
 
-Decision: add `bge_small_late_interaction_score_fusion_rerank` as a runnable candidate branch, but do not promote it until it has a saved NFCorpus test artifact.
+Decision: keep `bge_small_late_interaction_score_fusion_rerank` as a valid late-interaction ablation, but do not promote it.
 
 Reasons:
 
@@ -10,12 +10,14 @@ Reasons:
 - No complete stronger local English retriever or reranker is currently available.
 - Token-level MaxSim over the existing BGE-small ONNX model is a distinct local reranking/late-interaction ablation that can be benchmarked without credentials or test-qrels tuning.
 - The branch reranks the existing BGE-small dual-pool + Xenova MiniLM + BM25 score-fusion pool, so it tests top-10 ordering rather than adding another plain weighted fusion.
+- Test scoring produced `nDCG@10 = 0.36006186813204677`, below the current best `0.3675830427079456`.
+- It also lowered `Recall@100` from `0.3328785827037792` to `0.3211863718747774`.
 
 Consequences:
 
 - New module: `src/turboragger/late_interaction.py`.
 - New candidate: `bge_small_late_interaction_score_fusion_rerank`.
-- Verification so far is test and compile coverage only; no `nDCG@10` movement can be claimed until the benchmark command writes a run artifact.
+- Run artifact: `artifacts/runs/bge_small_late_interaction_score_fusion_rerank_20260608T195336Z.json`.
 - Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
 
 ## 2026-06-08 - Reject Direct Train/Dev GBDT Regression Feature Fusion
