@@ -1,5 +1,24 @@
 # DECISIONS.md
 
+## 2026-06-08 - Reject Dev-Selected BGE-Small Dense Pseudo-Relevance Feedback
+
+Decision: keep `bge_small_en_onnx_dense_prf_dev_selected` as a valid no-test-leak query-expansion ablation, but do not promote it.
+
+Reasons:
+
+- The branch selected among 20 dense PRF parameter combinations using NFCorpus `dev` qrels only.
+- Dev selection chose `feedback_docs = 3`, `query_weight = 1.0`, and `feedback_weight = 0.5`.
+- Test scoring produced `nDCG@10 = 0.34933673642384316`, below the current best `0.3675830427079456`.
+- It improves direct BGE-small ONNX by `0.007091771604310126` `nDCG@10`, so dense PRF has a real local effect.
+- It still lowers `nDCG@10` by `0.018246306284102454` and `Recall@100` by `0.014878553045134857` versus the current best.
+
+Consequences:
+
+- New candidate: `bge_small_en_onnx_dense_prf_dev_selected`.
+- Run artifact: `artifacts/runs/bge_small_en_onnx_dense_prf_dev_selected_20260608T213136Z.json`.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- Dense PRF is now covered both fixed and dev-selected; future query-expansion progress should use a stronger retriever/generator or a materially different expansion objective.
+
 ## 2026-06-08 - Reject BGE-Small Dense Pseudo-Relevance Feedback
 
 Decision: keep `bge_small_en_onnx_dense_prf` as a valid qrels-free dense query-expansion ablation, but do not promote it.

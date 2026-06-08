@@ -67,6 +67,8 @@ XENOVA_MINILM_ONNX_PATH = Path(
 TOP_K = 100
 CALIBRATION_GRID_VALUES = (0.0, 0.5, 1.0, 1.5, 2.0)
 RANK_WEIGHT_GRID_VALUES = (0.0, 0.25, 0.5, 1.0, 2.0, 4.0)
+DENSE_PRF_FEEDBACK_DOC_GRID = (3, 5, 10, 20)
+DENSE_PRF_FEEDBACK_WEIGHT_GRID = (0.0, 0.25, 0.5, 1.0, 2.0)
 
 
 def main() -> int:
@@ -84,6 +86,7 @@ def main() -> int:
             "scifact_dev_selected_minilm",
             "bge_small_en_onnx",
             "bge_small_en_onnx_dense_prf",
+            "bge_small_en_onnx_dense_prf_dev_selected",
             "bge_small_en_bm25_rrf",
             "bge_small_minilm_bm25_rrf",
             "bge_small_minilm_bm25_prf_rrf",
@@ -766,6 +769,106 @@ def build_candidate(
                 "feedback_docs": 10,
                 "query_weight": 1.0,
                 "feedback_weight": 0.5,
+            },
+        )
+
+    if candidate_name == "bge_small_en_onnx_dense_prf_dev_selected":
+        if calibration_queries is None or calibration_qrels is None:
+            raise ValueError("Dev calibration queries and qrels are required for this candidate.")
+        if not BGE_SMALL_EN_ONNX_PATH.is_dir():
+            raise FileNotFoundError(f"Local BGE ONNX path not found: {BGE_SMALL_EN_ONNX_PATH}")
+        base_retriever = OnnxDenseRetriever(
+            corpus,
+            model_path=BGE_SMALL_EN_ONNX_PATH,
+            source="bge_small_en_onnx_base_for_dense_prf_dev_selected",
+            batch_size=64,
+            max_length=512,
+            pooling="cls",
+            query_prefix="Represent this sentence for searching relevant passages: ",
+        )
+        candidates = []
+        for feedback_docs in DENSE_PRF_FEEDBACK_DOC_GRID:
+            for feedback_weight in DENSE_PRF_FEEDBACK_WEIGHT_GRID:
+                retriever = DensePrfRetriever(
+                    base_retriever,
+                    source=f"bge_small_en_onnx_dense_prf_fd{feedback_docs}_fw{_slug(str(feedback_weight))}",
+                    feedback_docs=feedback_docs,
+                    query_weight=1.0,
+                    feedback_weight=feedback_weight,
+                )
+                runs = {
+                    query_id: [
+                        result.doc_id
+                        for result in retriever.retrieve(query, TOP_K)
+                    ]
+                    for query_id, query in calibration_queries.items()
+                }
+                scores = score_ranked_results(runs, calibration_qrels)
+                candidates.append(
+                    {
+                        "feedback_docs": feedback_docs,
+                        "query_weight": 1.0,
+                        "feedback_weight": feedback_weight,
+                        "retriever": retriever,
+                        "metrics": scores["metrics"],
+                        "query_count": scores["queries_tested"],
+                        "failure_count": scores["failure_count"],
+                    }
+                )
+        candidates.sort(
+            key=lambda item: (
+                -float(item["metrics"].get("nDCG@10", 0.0)),
+                -float(item["metrics"].get("Recall@100", 0.0)),
+                int(item["feedback_docs"]),
+                float(item["feedback_weight"]),
+            )
+        )
+        selected = candidates[0]
+        all_results = [
+            {
+                "feedback_docs": item["feedback_docs"],
+                "query_weight": item["query_weight"],
+                "feedback_weight": item["feedback_weight"],
+                "metrics": item["metrics"],
+                "query_count": item["query_count"],
+                "failure_count": item["failure_count"],
+            }
+            for item in candidates
+        ]
+        return (
+            {"bge_small_en_onnx_dense_prf_dev_selected": selected["retriever"]},
+            "dense_prf_dev_selected",
+            {
+                "model": BGE_SMALL_EN_ONNX_MODEL,
+                "model_path": str(BGE_SMALL_EN_ONNX_PATH),
+                "mode": "bge_small_en_onnx_dense_prf_dev_selected",
+                "top_k": TOP_K,
+                "max_length": 512,
+                "pooling": "cls",
+                "selection": {
+                    "split": "dev",
+                    "metric": "nDCG@10",
+                    "selected_feedback_docs": selected["feedback_docs"],
+                    "selected_query_weight": selected["query_weight"],
+                    "selected_feedback_weight": selected["feedback_weight"],
+                    "candidate_count": len(candidates),
+                    "all_results": all_results,
+                },
+                "bge_query_prefix": "Represent this sentence for searching relevant passages: ",
+                "note": "Selects dense pseudo-relevance feedback parameters on NFCorpus dev qrels only, then evaluates the selected configuration on test.",
+            },
+            {"onnxruntime": _probe_module("onnxruntime"), "tokenizers": _probe_module("tokenizers")},
+            {
+                "k": TOP_K,
+                "max_length": 512,
+                "batch_size": 64,
+                "pooling": "cls",
+                "selection_split": "dev",
+                "selection_metric": "nDCG@10",
+                "selection_candidate_count": len(candidates),
+                "feedback_docs": selected["feedback_docs"],
+                "query_weight": selected["query_weight"],
+                "feedback_weight": selected["feedback_weight"],
             },
         )
 

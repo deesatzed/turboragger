@@ -156,6 +156,38 @@ class CandidateRunnerTests(unittest.TestCase):
         self.assertEqual(dense.call_args.kwargs["pooling"], "cls")
         self.assertEqual(prf.call_args.kwargs["feedback_docs"], 10)
 
+    def test_bge_dense_prf_dev_selected_candidate_selects_feedback_parameters(self):
+        runner = load_candidate_runner()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            model_path = Path(temp_dir)
+
+            def fake_prf(base_retriever, *, source, feedback_docs, query_weight, feedback_weight):
+                if feedback_docs == 5 and feedback_weight == 1.0:
+                    return RankedStaticRetriever(["good", "bad"])
+                return RankedStaticRetriever(["bad", "good"])
+
+            with (
+                mock.patch.object(runner, "BGE_SMALL_EN_ONNX_PATH", model_path),
+                mock.patch.object(runner, "OnnxDenseRetriever", return_value=StaticRetriever()),
+                mock.patch.object(runner, "DensePrfRetriever", side_effect=fake_prf),
+            ):
+                retrievers, mode, config, dependency, hyperparameters = runner.build_candidate(
+                    "bge_small_en_onnx_dense_prf_dev_selected",
+                    {"good": {"title": "good", "text": ""}, "bad": {"title": "bad", "text": ""}},
+                    calibration_queries={"q1": "query"},
+                    calibration_qrels={"q1": {"good": 1}},
+                )
+
+        self.assertEqual(mode, "dense_prf_dev_selected")
+        self.assertEqual(list(retrievers), ["bge_small_en_onnx_dense_prf_dev_selected"])
+        self.assertEqual(config["mode"], "bge_small_en_onnx_dense_prf_dev_selected")
+        self.assertEqual(config["selection"]["split"], "dev")
+        self.assertEqual(config["selection"]["selected_feedback_docs"], 5)
+        self.assertEqual(config["selection"]["selected_feedback_weight"], 1.0)
+        self.assertEqual(hyperparameters["feedback_docs"], 5)
+        self.assertEqual(hyperparameters["feedback_weight"], 1.0)
+        self.assertIn("onnxruntime", dependency)
+
     def test_scifact_finetuned_minilm_candidate_uses_local_domain_checkpoint(self):
         runner = load_candidate_runner()
         with tempfile.TemporaryDirectory() as temp_dir:

@@ -42,6 +42,7 @@ Measured but rejected branches include:
 - BGE-large-zh fallback: `0.14143051730446513`
 - BGE-small ONNX dense: `0.34224496481953304`
 - BGE-small ONNX dense pseudo-relevance feedback: `0.3425690018844359`
+- BGE-small ONNX dev-selected dense pseudo-relevance feedback: `0.34933673642384316`
 - BGE-small + MiniLM + BM25 RRF: `0.3563276091075661`
 - BM25 pseudo-relevance feedback: `0.2643284676291605`
 - BGE-small + MiniLM + BM25 PRF RRF: `0.34788409229565553`
@@ -86,6 +87,7 @@ Measured but rejected branches include:
 - No obvious local `bce-reranker-base_v1` path was found.
 - Fusion, rank-score fusion, dev-calibrated rank-score fusion, supervised feature fusion, nonlinear supervised feature fusion, learned cascades, train/dev two-ranker score fusion, five-source GBDT calibration, deep-pool GBDT fusion, deep-pool GBDT regression, current-source token MaxSim late interaction, second-stage late-interaction calibration, tiny SciFact-style fine-tuning, dev-selected tiny SciFact checkpoints, pooling, lexical-field, depth, and no-test-leak calibration changes extract small gains from the current weak source set but do not create the missing semantic ranking signal.
 - Dense pseudo-relevance feedback improves direct BGE-small `nDCG@10` by only `0.0003240370649028601` and reduces recall, so fixed PRF over the same dense model is not a SOTA-moving query-expansion path.
+- Dev-selected dense pseudo-relevance feedback improves direct BGE-small `nDCG@10` by `0.007091771604310126`, but still remains `0.018246306284102454` below the current best.
 - The best learned branch proves train/dev supervision can recover a small local gain, but the remaining `0.10231695729205437` `nDCG@10` gap is too large for same-source fusion alone to be a credible SOTA path.
 - The only large local fallback found, `BAAI/bge-large-zh-v1.5`, is a poor English NFCorpus fit.
 - Exhaustive five-source dev calibration is expensive and still misses the primary metric.
@@ -126,6 +128,7 @@ python3 -m json.tool artifacts/runs/scifact_finetuned_minilm_20260608T203922Z.js
 python3 -m json.tool artifacts/runs/scifact_dev_selected_minilm_20260608T205002Z.json >/tmp/scifact_dev_selected_minilm.pretty
 python3 -m json.tool artifacts/runs/bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion_20260608T210404Z.json >/tmp/current_best_scifact_dev_score_fusion.pretty
 python3 -m json.tool artifacts/runs/bge_small_en_onnx_dense_prf_20260608T212303Z.json >/tmp/bge_dense_prf.pretty
+python3 -m json.tool artifacts/runs/bge_small_en_onnx_dense_prf_dev_selected_20260608T213136Z.json >/tmp/bge_dense_prf_dev_selected.pretty
 python3 -m json.tool artifacts/local_model_inventory.json >/tmp/local_model_inventory.pretty
 python3 -m json.tool artifacts/leaderboard.json >/tmp/leaderboard.pretty
 python3 -m json.tool artifacts/sota_target.json >/tmp/sota_target.pretty
@@ -133,8 +136,8 @@ python3 -m json.tool artifacts/sota_target.json >/tmp/sota_target.pretty
 
 Observed outcomes:
 
-- Unit tests passed: 86 tests, 0 failures.
+- Unit tests passed: 87 tests, 0 failures.
 - Compileall exited 0.
-- JSON validation exited 0 for the latest BCE run, rank-score fusion run, dev-calibrated rank-score fusion run, train-split learned feature fusion run, train-split GBDT feature fusion run, train/dev GBDT cascade run, train/dev GBDT score-fusion run, train/dev GBDT five-source calibrated score-fusion run, deep-pool train/dev GBDT score-fusion run, train/dev GBDT regression score-fusion run, direct train/dev GBDT regression run, late-interaction rerank run, late-interaction plus current-best GBDT regression dev score-fusion run, deep-pool train/dev GBDT regression score-fusion run, SciFact-finetuned MiniLM run, dev-selected SciFact-finetuned MiniLM run, current-best plus dev-selected SciFact score-fusion run, dense PRF run, local model inventory, leaderboard, and SOTA target.
+- JSON validation exited 0 for the latest BCE run, rank-score fusion run, dev-calibrated rank-score fusion run, train-split learned feature fusion run, train-split GBDT feature fusion run, train/dev GBDT cascade run, train/dev GBDT score-fusion run, train/dev GBDT five-source calibrated score-fusion run, deep-pool train/dev GBDT score-fusion run, train/dev GBDT regression score-fusion run, direct train/dev GBDT regression run, late-interaction rerank run, late-interaction plus current-best GBDT regression dev score-fusion run, deep-pool train/dev GBDT regression score-fusion run, SciFact-finetuned MiniLM run, dev-selected SciFact-finetuned MiniLM run, current-best plus dev-selected SciFact score-fusion run, fixed dense PRF run, dev-selected dense PRF run, local model inventory, leaderboard, and SOTA target.
 - Root `turboragger` now has sandbox-limited git metadata; root `git diff --check` exits 0, but root files remain untracked locally because `.git` metadata writes are restricted in this environment. The GitHub mirror was pushed through the documented `/private/tmp` staging repo workaround.
 - Child repo diff checks exited 0; `turbovec` still has only the known untracked `.DS_Store`.

@@ -843,6 +843,39 @@ Continue methodology work without expanding scope prematurely:
   - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
   - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
 
+### 2026-06-08 Continuation - Dev-Selected BGE-Small Dense PRF
+
+- Added `bge_small_en_onnx_dense_prf_dev_selected` to `scripts/run_nfcorpus_candidate.py`.
+- The branch builds the BGE-small ONNX base retriever once, scores 20 dense PRF configurations on NFCorpus `dev`, selects by dev `nDCG@10` then dev `Recall@100`, and exposes only the selected retriever for `test`.
+- TDD red check:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: failed before implementation with `ValueError: Unsupported candidate: bge_small_en_onnx_dense_prf_dev_selected`.
+- Focused green checks:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: 31 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+- Benchmark command exited 0:
+  - `PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_en_onnx_dense_prf_dev_selected`
+- Generated `artifacts/runs/bge_small_en_onnx_dense_prf_dev_selected_20260608T213136Z.json`.
+- Updated `artifacts/leaderboard.json`.
+- Dev selection chose:
+  - `feedback_docs = 3`
+  - `query_weight = 1.0`
+  - `feedback_weight = 0.5`
+- Dev selection metrics:
+  - `nDCG@10 = 0.3307341905658255`
+  - `Recall@100 = 0.3191282770446407`
+- Test result: `nDCG@10 = 0.34933673642384316`, `Recall@100 = 0.3180000296586443`, 323 queries, 0 failures, runtime `150.554259` seconds.
+- This branch is not promoted because it loses `0.018246306284102454` primary `nDCG@10` and `0.014878553045134857` `Recall@100` versus the current best.
+- It improves direct BGE-small ONNX by `0.007091771604310126` `nDCG@10` and `0.005952169735471802` `Recall@100`.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- Current gap to selected SOTA target remains `0.10231695729205437`.
+- Full verification after the dev-selected BGE-small dense PRF branch and docs update:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -v`: 87 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+  - JSON validation exited 0 for the dev-selected dense PRF run, fixed dense PRF run, current-best train/dev GBDT regression score-fusion run, leaderboard, SOTA target, and local model inventory.
+  - Root `git diff --check`: exited 0.
+  - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
+  - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
+
 ### 2026-06-08 Continuation - Late-Interaction Rerank Candidate Wiring
 
 - Added `src/turboragger/late_interaction.py`.

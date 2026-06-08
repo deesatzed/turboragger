@@ -1551,3 +1551,53 @@ Conclusion:
 - It remains `0.1273309981155641` absolute `nDCG@10` below the selected SOTA target.
 - It remains `0.04243099811556411` absolute `nDCG@10` below the official BEIR comparator.
 - Dense PRF gives a tiny direct-BGE ranking gain but not a SOTA-moving signal; further query expansion should involve a stronger generator/retriever or train/dev-selected parameters rather than more fixed PRF over the same weak model.
+
+## 2026-06-08 - Dev-Selected BGE-Small Dense Pseudo-Relevance Feedback
+
+Rationale:
+
+- Fixed dense PRF improved direct BGE-small by only `0.0003240370649028601` `nDCG@10`.
+- This branch keeps test qrels untouched and selects dense PRF feedback parameters on NFCorpus `dev`, then evaluates the selected configuration on `test`.
+
+Command:
+
+```bash
+PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_en_onnx_dense_prf_dev_selected
+```
+
+Artifact:
+
+- `artifacts/runs/bge_small_en_onnx_dense_prf_dev_selected_20260608T213136Z.json`
+
+Dev selection:
+
+| Rank | feedback_docs | feedback_weight | Dev nDCG@10 | Dev Recall@100 |
+|---:|---:|---:|---:|---:|
+| 1 | `3` | `0.5` | `0.3307341905658255` | `0.3191282770446407` |
+| 2 | `3` | `0.25` | `0.32840166288952555` | `0.3184996922046842` |
+| 3 | `5` | `0.25` | `0.3281405592255335` | `0.3188856761217982` |
+| 4 | `3` | `1.0` | `0.32741001743642584` | `0.3233710542646078` |
+| 5 | `5` | `0.5` | `0.32518496541432734` | `0.32128918709614923` |
+
+Selected parameters:
+
+- `feedback_docs = 3`
+- `query_weight = 1.0`
+- `feedback_weight = 0.5`
+- Candidate grid size: 20
+
+Test result:
+
+| Candidate | nDCG@10 | Recall@100 | Runtime seconds | Queries | Failures |
+|---|---:|---:|---:|---:|---:|
+| `bge_small_en_onnx_dense_prf_dev_selected` | `0.34933673642384316` | `0.3180000296586443` | `150.554259` | 323 | 0 |
+
+Conclusion:
+
+- The branch is not promoted because it remains below the current best.
+- It improves fixed dense PRF by `0.006767734539407266` `nDCG@10` and `0.00746443252740675` `Recall@100`.
+- It improves direct BGE-small ONNX by `0.007091771604310126` `nDCG@10` and `0.005952169735471802` `Recall@100`.
+- It loses `0.018246306284102454` absolute `nDCG@10` and `0.014878553045134857` `Recall@100` versus the current best branch.
+- It remains `0.12056326357615682` absolute `nDCG@10` below the selected SOTA target.
+- It remains `0.035663263576156845` absolute `nDCG@10` below the official BEIR comparator.
+- Dev-selected dense PRF is a legitimate query-expansion improvement over direct BGE-small, but it still does not replace the need for a stronger retriever/reranker.
