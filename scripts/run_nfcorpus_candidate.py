@@ -86,6 +86,7 @@ def main() -> int:
             "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_cascade",
             "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_score_fusion",
             "bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_dev_score_fusion",
+            "bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion",
             "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion",
             "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_calibrated_score_fusion",
             "bge_small_dual_pool_xenova_minilm_bm25_dev_calibrated_score_fusion",
@@ -1802,6 +1803,7 @@ def build_candidate(
     if candidate_name in {
         "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_score_fusion",
         "bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_dev_score_fusion",
+        "bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion",
         "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion",
     }:
         if training_queries is None or training_qrels is None:
@@ -1860,14 +1862,18 @@ def build_candidate(
         use_deep_pool = candidate_name.startswith("bge_small_dual_pool_xenova_minilm_bm25_deep_")
         branch_k = 300 if use_deep_pool else None
         retrieval_mode = (
-            "multi_dense_sparse_deep_train_dev_gbdt_dev_score_fusion"
+            "multi_dense_sparse_deep_train_dev_gbdt_regression_dev_score_fusion"
+            if use_deep_pool and use_regression
+            else "multi_dense_sparse_deep_train_dev_gbdt_dev_score_fusion"
             if use_deep_pool
             else "multi_dense_sparse_train_dev_gbdt_regression_dev_score_fusion"
             if use_regression
             else "multi_dense_sparse_train_dev_gbdt_dev_score_fusion"
         )
         config_mode = (
-            "bge_small_cls_mean_onnx_plus_xenova_minilm_onnx_plus_bm25_deep_train_dev_gbdt_dev_score_fusion"
+            "bge_small_cls_mean_onnx_plus_xenova_minilm_onnx_plus_bm25_deep_train_dev_gbdt_regression_dev_score_fusion"
+            if use_deep_pool and use_regression
+            else "bge_small_cls_mean_onnx_plus_xenova_minilm_onnx_plus_bm25_deep_train_dev_gbdt_dev_score_fusion"
             if use_deep_pool
             else "bge_small_cls_mean_onnx_plus_xenova_minilm_onnx_plus_bm25_train_dev_gbdt_regression_dev_score_fusion"
             if use_regression

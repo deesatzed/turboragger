@@ -682,6 +682,33 @@ Continue methodology work without expanding scope prematurely:
   - JSON validation exited 0 for the current-best plus late-interaction branch run, standalone late-interaction rerank run, current-best train/dev GBDT regression score-fusion run, leaderboard, SOTA target, and local model inventory.
   - Root `git diff --check`: exited 0.
 
+### 2026-06-08 Continuation - Deep-Pool Train/Dev GBDT Regression Score Fusion
+
+- Added `bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion` to `scripts/run_nfcorpus_candidate.py`.
+- Added focused candidate-runner coverage proving the deep graded-regression branch sets `branch_k = 300` and uses `HistGradientBoostingRegressor`.
+- TDD red check:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: failed before implementation with `ValueError: Unsupported candidate: bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion`.
+- Focused green checks:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: 26 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+- Benchmark command exited 0:
+  - `PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion`
+- The command emitted the known non-fatal `joblib` warning about physical core detection and continued.
+- Generated `artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion_20260608T202346Z.json`.
+- Updated `artifacts/leaderboard.json`.
+- Test result: `nDCG@10 = 0.363902495492805`, `Recall@100 = 0.33490230529221543`, 323 queries, 0 failures, runtime `363.911605` seconds.
+- This branch is rejected because it loses `0.003680547215140606` primary `nDCG@10` versus the current best despite improving `Recall@100` by `0.0020237225884362497`.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- Current gap to selected SOTA target remains `0.10231695729205437`.
+- Current gap from the latest branch to selected SOTA target is `0.10599750450719497`.
+- Full verification after the deep-pool train/dev GBDT regression score-fusion branch and docs update:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -v`: 80 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+  - JSON validation exited 0 for the deep-pool train/dev GBDT regression score-fusion run, current-best train/dev GBDT regression score-fusion run, leaderboard, SOTA target, and local model inventory.
+  - Root `git diff --check`: exited 0.
+  - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
+  - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
+
 ### 2026-06-08 Continuation - Late-Interaction Rerank Candidate Wiring
 
 - Added `src/turboragger/late_interaction.py`.

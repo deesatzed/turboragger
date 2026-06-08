@@ -1345,3 +1345,35 @@ Conclusion:
 - It remains `0.10447205725661424` absolute `nDCG@10` below the selected SOTA target.
 - It remains `0.01957205725661426` absolute `nDCG@10` below the official BEIR comparator.
 - Current-source token MaxSim appears exhausted as a SOTA-moving path unless paired with a stronger reranker model or different token-level training signal.
+
+## 2026-06-08 - Deep-Pool Graded-Regression Dev Score Fusion
+
+Rationale:
+
+- The current best uses graded GBDT regression with `branch_k = 100`.
+- A previous deep-pool classifier branch improved recall but hurt `nDCG@10`; this branch tests whether deeper candidate exposure helps the graded-regression variant.
+
+Command:
+
+```bash
+PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion
+```
+
+Artifact:
+
+- `artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion_20260608T202346Z.json`
+
+Result:
+
+| Candidate | nDCG@10 | Recall@100 | Runtime seconds | Queries | Failures |
+|---|---:|---:|---:|---:|---:|
+| `bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion` | `0.363902495492805` | `0.33490230529221543` | `363.911605` | 323 | 0 |
+
+Conclusion:
+
+- The branch is not promoted because it reduces the primary metric.
+- It loses `0.003680547215140606` absolute `nDCG@10` versus the current best branch.
+- It improves `Recall@100` by `0.0020237225884362497` versus the current best branch.
+- It remains `0.10599750450719497` absolute `nDCG@10` below the selected SOTA target.
+- It remains `0.021097504507194997` absolute `nDCG@10` below the official BEIR comparator.
+- Deeper same-source candidate pools are useful for recall evidence but still degrade top-10 ordering under the current local source set.

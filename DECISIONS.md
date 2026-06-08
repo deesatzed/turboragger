@@ -1,5 +1,21 @@
 # DECISIONS.md
 
+## 2026-06-08 - Reject Deep-Pool Train/Dev GBDT Regression Score Fusion
+
+Decision: keep `bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion` as a valid recall-oriented graded-regression ablation, but do not promote it.
+
+Reasons:
+
+- The branch tested whether `branch_k = 300` improves the current best graded-regression dev score-fusion method.
+- Test scoring produced `nDCG@10 = 0.363902495492805`, below the current best `0.3675830427079456`.
+- It improved `Recall@100` from `0.3328785827037792` to `0.33490230529221543`, but `GOAL.md` defines `nDCG@10` as the primary SOTA metric.
+
+Consequences:
+
+- Run artifact: `artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion_20260608T202346Z.json`.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- Deeper same-source candidate pools have now been tested for both classifier and regressor learned fusion; both improve or preserve recall better than they improve top-10 ordering.
+
 ## 2026-06-08 - Reject Current-Best Plus Late-Interaction Dev Score Fusion
 
 Decision: keep `bge_small_late_interaction_gbdt_regression_dev_score_fusion` as a valid second-stage calibration ablation, but do not promote it.

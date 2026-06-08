@@ -562,6 +562,65 @@ class CandidateRunnerTests(unittest.TestCase):
         self.assertEqual(hyperparameters["positive_sample_weight"], 4.0)
         self.assertIn("sklearn", dependency)
 
+    def test_deep_train_dev_gbdt_regression_score_fusion_candidate_sets_branch_k(self):
+        runner = load_candidate_runner()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            model_path = Path(temp_dir)
+            fitted_model = object()
+            with (
+                mock.patch.object(runner, "BGE_SMALL_EN_ONNX_PATH", model_path),
+                mock.patch.object(runner, "XENOVA_MINILM_ONNX_PATH", model_path),
+                mock.patch.object(runner, "OnnxDenseRetriever", return_value=StaticRetriever()),
+                mock.patch.object(runner, "BM25Retriever", return_value=StaticRetriever()),
+                mock.patch.object(
+                    runner,
+                    "fit_candidate_gbdt_regression_fusion",
+                    return_value={
+                        "model": fitted_model,
+                        "feature_names": ["score:bge_small_cls_onnx"],
+                        "train_query_count": 1,
+                        "train_row_count": 2,
+                        "positive_row_count": 1,
+                        "algorithm": "HistGradientBoostingRegressor",
+                        "model_params": {"max_iter": 25},
+                        "max_relevance_target": 2.0,
+                        "positive_sample_weight": 4.0,
+                        "dependency": {"sklearn": {"usable": True}},
+                    },
+                ),
+                mock.patch.object(
+                    runner,
+                    "calibrate_candidate_weights",
+                    return_value={
+                        "weights": {
+                            "score_fusion_primary": 1.5,
+                            "gbdt_regression_secondary": 2.0,
+                        },
+                        "metrics": {"nDCG@10": 1.0, "Recall@100": 1.0},
+                        "split": "dev",
+                        "query_count": 1,
+                        "grid_size": 2,
+                    },
+                ),
+            ):
+                retrievers, mode, config, dependency, hyperparameters = runner.build_candidate(
+                    "bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion",
+                    {"d1": {"title": "title", "text": "text"}},
+                    training_queries={"q1": "query"},
+                    training_qrels={"q1": {"d1": 2}},
+                    calibration_queries={"q1": "query"},
+                    calibration_qrels={"q1": {"d1": 1}},
+                )
+
+        self.assertEqual(mode, "multi_dense_sparse_deep_train_dev_gbdt_regression_dev_score_fusion")
+        self.assertIsInstance(retrievers["score_fusion"], ScoreFusionRetriever)
+        self.assertEqual(retrievers["score_fusion"].branch_k, 300)
+        self.assertEqual(config["fit"]["algorithm"], "HistGradientBoostingRegressor")
+        self.assertEqual(config["branch_k"], 300)
+        self.assertEqual(hyperparameters["branch_k"], 300)
+        self.assertIn("deep_train_dev_gbdt_regression_dev_score_fusion", config["mode"])
+        self.assertIn("sklearn", dependency)
+
     def test_late_interaction_candidate_reranks_score_fusion_pool(self):
         runner = load_candidate_runner()
         with tempfile.TemporaryDirectory() as temp_dir:

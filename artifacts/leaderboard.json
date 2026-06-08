@@ -12,7 +12,7 @@
     "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z",
     "timestamp_utc": "2026-06-08T19:27:56+00:00"
   },
-  "generated_at_utc": "2026-06-08T20:18:07+00:00",
+  "generated_at_utc": "2026-06-08T20:29:50+00:00",
   "runs": [
     {
       "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z.json",
@@ -182,6 +182,19 @@
       "retrieval_mode": "multi_dense_sparse_train_dev_gbdt_regression_feature_fusion",
       "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_fusion_20260608T193443Z",
       "timestamp_utc": "2026-06-08T19:40:17+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion_20260608T202346Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.33490230529221543,
+        "nDCG@10": 0.363902495492805
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_deep_train_dev_gbdt_regression_dev_score_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion_20260608T202346Z",
+      "timestamp_utc": "2026-06-08T20:29:50+00:00"
     },
     {
       "artifact_path": "artifacts/runs/bge_small_mean_xenova_minilm_bm25_score_fusion_20260608T153812Z.json",
