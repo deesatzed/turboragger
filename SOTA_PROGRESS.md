@@ -1377,3 +1377,37 @@ Conclusion:
 - It remains `0.10599750450719497` absolute `nDCG@10` below the selected SOTA target.
 - It remains `0.021097504507194997` absolute `nDCG@10` below the official BEIR comparator.
 - Deeper same-source candidate pools are useful for recall evidence but still degrade top-10 ordering under the current local source set.
+
+## 2026-06-08 - SciFact-Finetuned MiniLM Dense Branch
+
+Rationale:
+
+- A bounded local inventory listed uncategorized SentenceTransformer-style checkpoints under `CPfrac/cam-rag-platform/output/scifact-finetuned`.
+- The root checkpoint is complete and loads through the existing guarded direct-`transformers` dense retriever.
+- This branch tests whether a local domain-supervised MiniLM checkpoint fine-tuned on SciFact-style biomedical pairs transfers to NFCorpus without network access, credentials, or test-qrels tuning.
+
+Command:
+
+```bash
+PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate scifact_finetuned_minilm
+```
+
+Artifact:
+
+- `artifacts/runs/scifact_finetuned_minilm_20260608T203922Z.json`
+
+Result:
+
+| Candidate | nDCG@10 | Recall@100 | Runtime seconds | Queries | Failures |
+|---|---:|---:|---:|---:|---:|
+| `scifact_finetuned_minilm` | `0.3113948750306552` | `0.30306730089962974` | `20.385284` | 323 | 0 |
+
+Conclusion:
+
+- The branch is not promoted because it reduces both primary and secondary metrics.
+- It loses `0.0561881676772904` absolute `nDCG@10` versus the current best branch.
+- It loses `0.029811281804149437` `Recall@100` versus the current best branch.
+- It is also `0.004606342771565408` absolute `nDCG@10` below the direct MiniLM baseline.
+- It remains `0.15850512496934477` absolute `nDCG@10` below the selected SOTA target.
+- It remains `0.07360512496934479` absolute `nDCG@10` below the official BEIR comparator.
+- Tiny local SciFact-style fine-tuning is not a SOTA path for NFCorpus under this artifact surface; future fine-tuning must use a stronger base model, larger domain data, or a reranker objective.

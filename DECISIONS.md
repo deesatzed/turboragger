@@ -1,5 +1,23 @@
 # DECISIONS.md
 
+## 2026-06-08 - Reject Local SciFact-Finetuned MiniLM As A SOTA Path
+
+Decision: keep `scifact_finetuned_minilm` as a valid measured domain-supervised dense branch, but do not promote it.
+
+Reasons:
+
+- The branch benchmarks a complete local SentenceTransformer checkpoint at `/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned`.
+- The checkpoint README identifies it as fine-tuned from `sentence-transformers/all-MiniLM-L6-v2` on a tiny SciFact-style biomedical pair set.
+- It loads through the existing guarded direct-`transformers` dense retriever with mean pooling and `max_length = 256`.
+- Test scoring produced `nDCG@10 = 0.3113948750306552`, below both the current best `0.3675830427079456` and the direct MiniLM baseline `0.3160012178022206`.
+- It also lowered `Recall@100` to `0.30306730089962974`, below the current best `0.3328785827037792`.
+
+Consequences:
+
+- Run artifact: `artifacts/runs/scifact_finetuned_minilm_20260608T203922Z.json`.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- Local fine-tuning remains plausible only with a stronger base model, more relevant training data, or a top-10 reranking objective; this tiny MiniLM checkpoint does not supply the missing SOTA-moving semantic signal.
+
 ## 2026-06-08 - Reject Deep-Pool Train/Dev GBDT Regression Score Fusion
 
 Decision: keep `bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_regression_dev_score_fusion` as a valid recall-oriented graded-regression ablation, but do not promote it.

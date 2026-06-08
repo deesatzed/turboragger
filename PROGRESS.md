@@ -709,6 +709,36 @@ Continue methodology work without expanding scope prematurely:
   - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
   - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
 
+### 2026-06-08 Continuation - SciFact-Finetuned MiniLM Dense Branch
+
+- Discovered that `/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned` is a complete SentenceTransformer-style checkpoint with `config.json`, tokenizer files, `model.safetensors`, `modules.json`, and pooling metadata.
+- Verified the checkpoint loads through the existing guarded `TransformerDenseRetriever` path despite the plain `transformers` optional-kernel import failure.
+- Added `scifact_finetuned_minilm` to `scripts/run_nfcorpus_candidate.py`.
+- Added focused candidate-runner coverage proving the branch uses the local checkpoint, mean pooling, and `max_length = 256`.
+- TDD red check:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: failed before implementation with missing `SCIFACT_FINETUNED_MINILM_PATH`.
+- Focused green checks:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: 27 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+- Benchmark command exited 0:
+  - `PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate scifact_finetuned_minilm`
+- Generated `artifacts/runs/scifact_finetuned_minilm_20260608T203922Z.json`.
+- Updated `artifacts/leaderboard.json`.
+- Test result: `nDCG@10 = 0.3113948750306552`, `Recall@100 = 0.30306730089962974`, 323 queries, 0 failures, runtime `20.385284` seconds.
+- This branch is rejected because it loses `0.0561881676772904` primary `nDCG@10` and `0.029811281804149437` `Recall@100` versus the current best.
+- It is also `0.004606342771565408` absolute `nDCG@10` below the direct MiniLM baseline, so the tiny SciFact-style fine-tuning did not transfer to NFCorpus.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- Current gap to selected SOTA target remains `0.10231695729205437`.
+- Current gap from the latest branch to selected SOTA target is `0.15850512496934477`.
+- Regenerated `artifacts/local_model_inventory.json`; the root SciFact checkpoint is now marked `benchmarked = true`, and the summary still reports `unmeasured_sota_candidate_count = 0`.
+- Full verification after the SciFact-finetuned MiniLM branch and docs update:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -v`: 81 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+  - JSON validation exited 0 for the SciFact-finetuned MiniLM run, current-best train/dev GBDT regression score-fusion run, local model inventory, leaderboard, and SOTA target.
+  - Root `git diff --check`: exited 0.
+  - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
+  - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
+
 ### 2026-06-08 Continuation - Late-Interaction Rerank Candidate Wiring
 
 - Added `src/turboragger/late_interaction.py`.

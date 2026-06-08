@@ -120,6 +120,36 @@ class CandidateRunnerTests(unittest.TestCase):
         self.assertEqual(dense.call_args.kwargs["pooling"], "cls")
         self.assertIn("direct_transformers", dependency)
 
+    def test_scifact_finetuned_minilm_candidate_uses_local_domain_checkpoint(self):
+        runner = load_candidate_runner()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            model_path = Path(temp_dir)
+            with (
+                mock.patch.object(runner, "SCIFACT_FINETUNED_MINILM_PATH", model_path),
+                mock.patch.object(runner, "TransformerDenseRetriever", return_value=StaticRetriever()) as dense,
+            ):
+                retrievers, mode, config, dependency, hyperparameters = runner.build_candidate(
+                    "scifact_finetuned_minilm",
+                    {"d1": {"title": "title", "text": "text"}},
+                )
+
+        dense.assert_called_once_with(
+            {"d1": {"title": "title", "text": "text"}},
+            model_path=model_path,
+            source="scifact_finetuned_minilm_direct_transformers",
+            batch_size=32,
+            max_length=256,
+            pooling="mean",
+        )
+        self.assertEqual(mode, "dense")
+        self.assertEqual(list(retrievers), ["scifact_finetuned_minilm"])
+        self.assertEqual(config["model"], runner.SCIFACT_FINETUNED_MINILM_MODEL)
+        self.assertEqual(config["model_path"], str(model_path))
+        self.assertEqual(config["pooling"], "mean")
+        self.assertEqual(hyperparameters["pooling"], "mean")
+        self.assertEqual(hyperparameters["max_length"], 256)
+        self.assertIn("direct_transformers", dependency)
+
     def test_bge_dual_pooling_score_fusion_candidate_uses_cls_and_mean_branches(self):
         runner = load_candidate_runner()
         with tempfile.TemporaryDirectory() as temp_dir:

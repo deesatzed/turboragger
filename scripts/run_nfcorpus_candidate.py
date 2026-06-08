@@ -43,6 +43,10 @@ BCE_EMBEDDING_MODEL = "maidalun1020/bce-embedding-base_v1"
 BCE_EMBEDDING_PATH = Path(
     "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/maidalun1020/bce-embedding-base_v1"
 )
+SCIFACT_FINETUNED_MINILM_MODEL = "local/scifact-finetuned-all-MiniLM-L6-v2"
+SCIFACT_FINETUNED_MINILM_PATH = Path(
+    "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned"
+)
 BGE_SMALL_EN_ONNX_MODEL = "Xenova/bge-small-en-v1.5"
 BGE_SMALL_EN_ONNX_PATH = Path(
     "/Volumes/WS4TB/WS4TBr/finESS/node_modules/@xenova/transformers/.cache/Xenova/bge-small-en-v1.5"
@@ -67,6 +71,7 @@ def main() -> int:
             "minilm_bm25_rrf",
             "bge_large_zh",
             "bce_embedding_base_v1",
+            "scifact_finetuned_minilm",
             "bge_small_en_onnx",
             "bge_small_en_bm25_rrf",
             "bge_small_minilm_bm25_rrf",
@@ -558,6 +563,34 @@ def build_candidate(
             },
             {"direct_transformers": {"usable": True}},
             {"k": TOP_K, "max_length": 512, "batch_size": 32, "pooling": "cls"},
+        )
+
+    if candidate_name == "scifact_finetuned_minilm":
+        if not SCIFACT_FINETUNED_MINILM_PATH.is_dir():
+            raise FileNotFoundError(f"Local SciFact-finetuned MiniLM path not found: {SCIFACT_FINETUNED_MINILM_PATH}")
+        return (
+            {
+                "scifact_finetuned_minilm": TransformerDenseRetriever(
+                    corpus,
+                    model_path=SCIFACT_FINETUNED_MINILM_PATH,
+                    source="scifact_finetuned_minilm_direct_transformers",
+                    batch_size=32,
+                    max_length=256,
+                    pooling="mean",
+                )
+            },
+            "dense",
+            {
+                "model": SCIFACT_FINETUNED_MINILM_MODEL,
+                "model_path": str(SCIFACT_FINETUNED_MINILM_PATH),
+                "mode": "dense_only_direct_transformers_mean_pooling",
+                "top_k": TOP_K,
+                "max_length": 256,
+                "pooling": "mean",
+                "note": "Complete local SentenceTransformer checkpoint fine-tuned from all-MiniLM-L6-v2 on SciFact-style biomedical pairs; benchmarked as a domain-supervised dense retrieval signal.",
+            },
+            {"direct_transformers": {"usable": True}},
+            {"k": TOP_K, "max_length": 256, "batch_size": 32, "pooling": "mean"},
         )
 
     if candidate_name == "bge_small_en_onnx":
