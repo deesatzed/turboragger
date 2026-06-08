@@ -58,6 +58,7 @@ Measured but rejected branches include:
 - BGE-small dual-pool + Xenova MiniLM + BM25 train/dev GBDT regression score fusion: `0.3675830427079456` current best, still below SOTA
 - BGE-small dual-pool + Xenova MiniLM + BM25 direct train/dev GBDT regression fusion: `0.36434599974495163`
 - BGE-small late-interaction MaxSim rerank over score-fusion pool: `0.36006186813204677`
+- BGE-small late-interaction plus current-best GBDT regression dev score fusion: `0.36542794274338575`
 - Corrected LEANN MiniLM no-recompute: `0.3138633685494098`
 - Dual-MiniLM score fusion: `0.3559227197172415`
 - CombMNZ agreement fusion: `0.3594854251733051`
@@ -75,7 +76,7 @@ Measured but rejected branches include:
 - The broader local inventory found `maidalun1020/bce-embedding-base_v1`, but the benchmark scored only `0.2621479854747279` `nDCG@10`.
 - No complete local reranker model is available for the checked MiniCPM, BGE reranker, or cross-encoder candidates.
 - No obvious local `bce-reranker-base_v1` path was found.
-- Fusion, rank-score fusion, dev-calibrated rank-score fusion, supervised feature fusion, nonlinear supervised feature fusion, learned cascades, train/dev two-ranker score fusion, five-source GBDT calibration, deep-pool GBDT fusion, current-source token MaxSim late interaction, pooling, lexical-field, depth, and no-test-leak calibration changes extract small gains from the current weak source set but do not create the missing semantic ranking signal.
+- Fusion, rank-score fusion, dev-calibrated rank-score fusion, supervised feature fusion, nonlinear supervised feature fusion, learned cascades, train/dev two-ranker score fusion, five-source GBDT calibration, deep-pool GBDT fusion, current-source token MaxSim late interaction, second-stage late-interaction calibration, pooling, lexical-field, depth, and no-test-leak calibration changes extract small gains from the current weak source set but do not create the missing semantic ranking signal.
 - The best learned branch proves train/dev supervision can recover a small local gain, but the remaining `0.10231695729205437` `nDCG@10` gap is too large for same-source fusion alone to be a credible SOTA path.
 - The only large local fallback found, `BAAI/bge-large-zh-v1.5`, is a poor English NFCorpus fit.
 - Exhaustive five-source dev calibration is expensive and still misses the primary metric.
@@ -110,6 +111,7 @@ python3 -m json.tool artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_deep_
 python3 -m json.tool artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z.json >/tmp/train_dev_gbdt_regression_dev_score_fusion.pretty
 python3 -m json.tool artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_fusion_20260608T193443Z.json >/tmp/train_dev_gbdt_regression_fusion.pretty
 python3 -m json.tool artifacts/runs/bge_small_late_interaction_score_fusion_rerank_20260608T195336Z.json >/tmp/late_interaction.pretty
+python3 -m json.tool artifacts/runs/bge_small_late_interaction_gbdt_regression_dev_score_fusion_20260608T200608Z.json >/tmp/late_gbdt.pretty
 python3 -m json.tool artifacts/local_model_inventory.json >/tmp/local_model_inventory.pretty
 python3 -m json.tool artifacts/leaderboard.json >/tmp/leaderboard.pretty
 python3 -m json.tool artifacts/sota_target.json >/tmp/sota_target.pretty
@@ -117,8 +119,8 @@ python3 -m json.tool artifacts/sota_target.json >/tmp/sota_target.pretty
 
 Observed outcomes:
 
-- Unit tests passed: 78 tests, 0 failures.
+- Unit tests passed: 79 tests, 0 failures.
 - Compileall exited 0.
-- JSON validation exited 0 for the latest BCE run, rank-score fusion run, dev-calibrated rank-score fusion run, train-split learned feature fusion run, train-split GBDT feature fusion run, train/dev GBDT cascade run, train/dev GBDT score-fusion run, train/dev GBDT five-source calibrated score-fusion run, deep-pool train/dev GBDT score-fusion run, train/dev GBDT regression score-fusion run, direct train/dev GBDT regression run, late-interaction rerank run, local model inventory, leaderboard, and SOTA target.
+- JSON validation exited 0 for the latest BCE run, rank-score fusion run, dev-calibrated rank-score fusion run, train-split learned feature fusion run, train-split GBDT feature fusion run, train/dev GBDT cascade run, train/dev GBDT score-fusion run, train/dev GBDT five-source calibrated score-fusion run, deep-pool train/dev GBDT score-fusion run, train/dev GBDT regression score-fusion run, direct train/dev GBDT regression run, late-interaction rerank run, late-interaction plus current-best GBDT regression dev score-fusion run, local model inventory, leaderboard, and SOTA target.
 - Root `turboragger` now has sandbox-limited git metadata; root `git diff --check` exits 0, but root files remain untracked locally because `.git` metadata writes are restricted in this environment. The GitHub mirror was pushed through the documented `/private/tmp` staging repo workaround.
 - Child repo diff checks exited 0; `turbovec` still has only the known untracked `.DS_Store`.

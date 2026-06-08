@@ -654,6 +654,34 @@ Continue methodology work without expanding scope prematurely:
   - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
   - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
 
+### 2026-06-08 Continuation - Current-Best Plus Late-Interaction Dev Score Fusion
+
+- Added `bge_small_late_interaction_gbdt_regression_dev_score_fusion` to `scripts/run_nfcorpus_candidate.py`.
+- Added focused candidate-runner coverage proving the branch dev-calibrates the current best graded-regression score-fusion anchor against the late-interaction branch.
+- TDD red check:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: failed before implementation with `ValueError: Unsupported candidate: bge_small_late_interaction_gbdt_regression_dev_score_fusion`.
+- Focused green checks:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: 25 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+- Benchmark command exited 0:
+  - `PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_late_interaction_gbdt_regression_dev_score_fusion`
+- The command emitted the known non-fatal `joblib` warning about physical core detection and continued.
+- Generated `artifacts/runs/bge_small_late_interaction_gbdt_regression_dev_score_fusion_20260608T200608Z.json`.
+- Updated `artifacts/leaderboard.json`.
+- Second-stage dev calibration used NFCorpus `dev` qrels only:
+  - Selected weights: `current_best_primary = 0.5`, `late_interaction_secondary = 2.0`.
+  - Dev metrics: `nDCG@10 = 0.3506070294397712`, `Recall@100 = 0.319279558808475`.
+- Test result: `nDCG@10 = 0.36542794274338575`, `Recall@100 = 0.32149384348966625`, 323 queries, 0 failures, runtime `717.679263` seconds.
+- This branch is rejected because it loses `0.00215509996455987` primary `nDCG@10` and `0.011384739214112927` `Recall@100` versus the current best.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- Current gap to selected SOTA target remains `0.10231695729205437`.
+- Current gap from the latest branch to selected SOTA target is `0.10447205725661424`.
+- Full verification after the current-best plus late-interaction branch and docs update:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -v`: 79 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+  - JSON validation exited 0 for the current-best plus late-interaction branch run, standalone late-interaction rerank run, current-best train/dev GBDT regression score-fusion run, leaderboard, SOTA target, and local model inventory.
+  - Root `git diff --check`: exited 0.
+
 ### 2026-06-08 Continuation - Late-Interaction Rerank Candidate Wiring
 
 - Added `src/turboragger/late_interaction.py`.

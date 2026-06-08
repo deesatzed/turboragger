@@ -75,6 +75,7 @@ def main() -> int:
             "xenova_minilm_onnx",
             "bge_small_xenova_minilm_bm25_score_fusion",
             "bge_small_late_interaction_score_fusion_rerank",
+            "bge_small_late_interaction_gbdt_regression_dev_score_fusion",
             "bge_small_mean_xenova_minilm_bm25_score_fusion",
             "bge_small_dual_pool_xenova_minilm_bm25_score_fusion",
             "bge_small_dual_pool_xenova_minilm_bm25_rank_score_fusion",
@@ -1014,6 +1015,78 @@ def build_candidate(
                 "max_query_length": 64,
                 "max_doc_length": 192,
                 "late_interaction_batch_size": 16,
+            },
+        )
+
+    if candidate_name == "bge_small_late_interaction_gbdt_regression_dev_score_fusion":
+        if not training_queries or not training_qrels:
+            raise ValueError("Training queries and qrels are required for this candidate.")
+        if not calibration_queries or not calibration_qrels:
+            raise ValueError("Dev calibration queries and qrels are required for this candidate.")
+        current_retrievers, current_mode, current_config, current_dependency, current_hyperparameters = build_candidate(
+            "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion",
+            corpus,
+            training_queries=training_queries,
+            training_qrels=training_qrels,
+            calibration_queries=calibration_queries,
+            calibration_qrels=calibration_qrels,
+        )
+        late_retrievers, late_mode, late_config, late_dependency, late_hyperparameters = build_candidate(
+            "bge_small_late_interaction_score_fusion_rerank",
+            corpus,
+        )
+        branch_retrievers = {
+            "current_best_primary": current_retrievers["score_fusion"],
+            "late_interaction_secondary": late_retrievers["late_interaction_rerank"],
+        }
+        branch_names = list(branch_retrievers)
+        calibration = calibrate_candidate_weights(
+            retrievers=branch_retrievers,
+            calibration_queries=calibration_queries,
+            calibration_qrels=calibration_qrels,
+            branch_names=branch_names,
+        )
+        weights = calibration["weights"]
+        return (
+            {
+                "score_fusion": ScoreFusionRetriever(
+                    branch_retrievers,
+                    source="bge_small_late_interaction_gbdt_regression_dev_score_fusion",
+                    weights=weights,
+                )
+            },
+            "multi_dense_sparse_late_interaction_gbdt_regression_dev_score_fusion",
+            {
+                "model": "Current best graded-regression score fusion + BGE-small token MaxSim late-interaction rerank",
+                "mode": "bge_small_late_interaction_plus_gbdt_regression_dev_score_fusion",
+                "top_k": TOP_K,
+                "score_normalization": "minmax_per_branch",
+                "fusion_branches": branch_names,
+                "weights": weights,
+                "calibration": calibration,
+                "current_best_branch": {
+                    "retrieval_mode": current_mode,
+                    "config": current_config,
+                    "hyperparameters": current_hyperparameters,
+                },
+                "late_interaction_branch": {
+                    "retrieval_mode": late_mode,
+                    "config": late_config,
+                    "hyperparameters": late_hyperparameters,
+                },
+                "note": "Second-stage dev calibration over current best and late-interaction branch; no test qrels are used for calibration.",
+            },
+            {
+                **current_dependency,
+                **late_dependency,
+            },
+            {
+                "k": TOP_K,
+                "score_normalization": "minmax_per_branch",
+                "weights": weights,
+                "calibration": calibration,
+                "current_best_hyperparameters": current_hyperparameters,
+                "late_interaction_hyperparameters": late_hyperparameters,
             },
         )
 

@@ -1,5 +1,22 @@
 # DECISIONS.md
 
+## 2026-06-08 - Reject Current-Best Plus Late-Interaction Dev Score Fusion
+
+Decision: keep `bge_small_late_interaction_gbdt_regression_dev_score_fusion` as a valid second-stage calibration ablation, but do not promote it.
+
+Reasons:
+
+- The branch tested whether the failed BGE-small token-MaxSim late-interaction branch had complementary signal when dev-calibrated against the current best graded-regression score-fusion anchor.
+- The branch selected `current_best_primary = 0.5` and `late_interaction_secondary = 2.0` on NFCorpus `dev`.
+- Test scoring produced `nDCG@10 = 0.36542794274338575`, below the current best `0.3675830427079456`.
+- It also lowered `Recall@100` from `0.3328785827037792` to `0.32149384348966625`.
+
+Consequences:
+
+- Run artifact: `artifacts/runs/bge_small_late_interaction_gbdt_regression_dev_score_fusion_20260608T200608Z.json`.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- Current-source token MaxSim is now covered both standalone and as a dev-calibrated secondary signal; the next credible SOTA path still requires a stronger English retriever or real reranker.
+
 ## 2026-06-08 - Add Late-Interaction Rerank Candidate Without Promoting It
 
 Decision: keep `bge_small_late_interaction_score_fusion_rerank` as a valid late-interaction ablation, but do not promote it.

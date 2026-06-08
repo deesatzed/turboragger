@@ -1308,3 +1308,40 @@ Conclusion:
 - It remains `0.10983813186795321` absolute `nDCG@10` below the selected SOTA target.
 - It remains `0.02493813186795324` absolute `nDCG@10` below the official BEIR comparator.
 - Late interaction remains a plausible methodology family, but this measured BGE-small token-MaxSim version is not the missing SOTA signal.
+
+## 2026-06-08 - Current-Best Plus Late-Interaction Dev Score Fusion
+
+Rationale:
+
+- The standalone late-interaction branch failed, but it could still contain complementary ranking signal.
+- This branch dev-calibrates the current best graded-regression score-fusion anchor against the BGE-small token-MaxSim late-interaction branch, using NFCorpus `dev` only for the second-stage fusion weights.
+
+Command:
+
+```bash
+PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_late_interaction_gbdt_regression_dev_score_fusion
+```
+
+Artifact:
+
+- `artifacts/runs/bge_small_late_interaction_gbdt_regression_dev_score_fusion_20260608T200608Z.json`
+
+Dev calibration:
+
+- Selected weights: `current_best_primary = 0.5`, `late_interaction_secondary = 2.0`.
+- Dev metrics: `nDCG@10 = 0.3506070294397712`, `Recall@100 = 0.319279558808475`.
+
+Result:
+
+| Candidate | nDCG@10 | Recall@100 | Runtime seconds | Queries | Failures |
+|---|---:|---:|---:|---:|---:|
+| `bge_small_late_interaction_gbdt_regression_dev_score_fusion` | `0.36542794274338575` | `0.32149384348966625` | `717.679263` | 323 | 0 |
+
+Conclusion:
+
+- The branch is not promoted because it reduces both primary and secondary metrics.
+- It loses `0.00215509996455987` absolute `nDCG@10` versus the current best branch.
+- It loses `0.011384739214112927` `Recall@100` versus the current best branch.
+- It remains `0.10447205725661424` absolute `nDCG@10` below the selected SOTA target.
+- It remains `0.01957205725661426` absolute `nDCG@10` below the official BEIR comparator.
+- Current-source token MaxSim appears exhausted as a SOTA-moving path unless paired with a stronger reranker model or different token-level training signal.
