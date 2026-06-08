@@ -18,6 +18,17 @@ class StaticRetriever:
         return [RetrievalResult("d1", 1.0, "static")][:k]
 
 
+class RankedStaticRetriever:
+    def __init__(self, doc_ids: list[str]):
+        self.doc_ids = doc_ids
+
+    def retrieve(self, query: str, k: int = 100):
+        return [
+            RetrievalResult(doc_id, 1.0 / (index + 1), "static")
+            for index, doc_id in enumerate(self.doc_ids[:k])
+        ]
+
+
 def load_candidate_runner():
     root = Path(__file__).resolve().parents[1]
     module_path = root / "scripts" / "run_nfcorpus_candidate.py"
@@ -148,6 +159,47 @@ class CandidateRunnerTests(unittest.TestCase):
         self.assertEqual(config["pooling"], "mean")
         self.assertEqual(hyperparameters["pooling"], "mean")
         self.assertEqual(hyperparameters["max_length"], 256)
+        self.assertIn("direct_transformers", dependency)
+
+    def test_scifact_dev_selected_minilm_candidate_selects_checkpoint_on_dev_qrels(self):
+        runner = load_candidate_runner()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            weak_path = root / "checkpoint-9"
+            strong_path = root / "checkpoint-18"
+            weak_path.mkdir()
+            strong_path.mkdir()
+            retriever_by_path = {
+                str(weak_path): RankedStaticRetriever(["bad", "good"]),
+                str(strong_path): RankedStaticRetriever(["good", "bad"]),
+            }
+
+            def fake_dense(corpus, *, model_path, source, batch_size, max_length, pooling):
+                return retriever_by_path[str(model_path)]
+
+            with (
+                mock.patch.object(
+                    runner,
+                    "SCIFACT_FINETUNED_MINILM_CANDIDATE_PATHS",
+                    [("checkpoint-9", weak_path), ("checkpoint-18", strong_path)],
+                ),
+                mock.patch.object(runner, "TransformerDenseRetriever", side_effect=fake_dense),
+            ):
+                retrievers, mode, config, dependency, hyperparameters = runner.build_candidate(
+                    "scifact_dev_selected_minilm",
+                    {"good": {"title": "good", "text": ""}, "bad": {"title": "bad", "text": ""}},
+                    calibration_queries={"q1": "query"},
+                    calibration_qrels={"q1": {"good": 1}},
+                )
+
+        self.assertEqual(mode, "dense_dev_selected")
+        self.assertEqual(list(retrievers), ["scifact_dev_selected_minilm"])
+        self.assertIs(retrievers["scifact_dev_selected_minilm"], retriever_by_path[str(strong_path)])
+        self.assertEqual(config["selection"]["split"], "dev")
+        self.assertEqual(config["selection"]["selected_label"], "checkpoint-18")
+        self.assertEqual(config["selected_model_path"], str(strong_path))
+        self.assertEqual(hyperparameters["selected_checkpoint"], "checkpoint-18")
+        self.assertEqual(hyperparameters["candidate_count"], 2)
         self.assertIn("direct_transformers", dependency)
 
     def test_bge_dual_pooling_score_fusion_candidate_uses_cls_and_mean_branches(self):

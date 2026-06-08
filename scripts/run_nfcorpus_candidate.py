@@ -47,6 +47,14 @@ SCIFACT_FINETUNED_MINILM_MODEL = "local/scifact-finetuned-all-MiniLM-L6-v2"
 SCIFACT_FINETUNED_MINILM_PATH = Path(
     "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned"
 )
+SCIFACT_FINETUNED_MINILM_CANDIDATE_PATHS = [
+    ("checkpoint-9", SCIFACT_FINETUNED_MINILM_PATH / "checkpoint-9"),
+    ("checkpoint-18", SCIFACT_FINETUNED_MINILM_PATH / "checkpoint-18"),
+    ("checkpoint-27", SCIFACT_FINETUNED_MINILM_PATH / "checkpoint-27"),
+    ("checkpoint-36", SCIFACT_FINETUNED_MINILM_PATH / "checkpoint-36"),
+    ("checkpoint-45", SCIFACT_FINETUNED_MINILM_PATH / "checkpoint-45"),
+    ("final", SCIFACT_FINETUNED_MINILM_PATH),
+]
 BGE_SMALL_EN_ONNX_MODEL = "Xenova/bge-small-en-v1.5"
 BGE_SMALL_EN_ONNX_PATH = Path(
     "/Volumes/WS4TB/WS4TBr/finESS/node_modules/@xenova/transformers/.cache/Xenova/bge-small-en-v1.5"
@@ -72,6 +80,7 @@ def main() -> int:
             "bge_large_zh",
             "bce_embedding_base_v1",
             "scifact_finetuned_minilm",
+            "scifact_dev_selected_minilm",
             "bge_small_en_onnx",
             "bge_small_en_bm25_rrf",
             "bge_small_minilm_bm25_rrf",
@@ -591,6 +600,92 @@ def build_candidate(
             },
             {"direct_transformers": {"usable": True}},
             {"k": TOP_K, "max_length": 256, "batch_size": 32, "pooling": "mean"},
+        )
+
+    if candidate_name == "scifact_dev_selected_minilm":
+        if calibration_queries is None or calibration_qrels is None:
+            raise ValueError("Calibration queries and qrels are required for scifact_dev_selected_minilm.")
+        candidates = []
+        for label, path in SCIFACT_FINETUNED_MINILM_CANDIDATE_PATHS:
+            if not path.is_dir():
+                continue
+            retriever = TransformerDenseRetriever(
+                corpus,
+                model_path=path,
+                source=f"scifact_finetuned_minilm_{_slug(label)}_direct_transformers",
+                batch_size=32,
+                max_length=256,
+                pooling="mean",
+            )
+            runs = {
+                query_id: [
+                    result.doc_id
+                    for result in retriever.retrieve(query, TOP_K)
+                ]
+                for query_id, query in calibration_queries.items()
+            }
+            scores = score_ranked_results(runs, calibration_qrels)
+            candidates.append(
+                {
+                    "label": label,
+                    "path": path,
+                    "retriever": retriever,
+                    "metrics": scores["metrics"],
+                    "query_count": scores["queries_tested"],
+                    "failure_count": scores["failure_count"],
+                }
+            )
+        if not candidates:
+            raise FileNotFoundError("No complete local SciFact-finetuned MiniLM checkpoints found.")
+        candidates.sort(
+            key=lambda item: (
+                -float(item["metrics"].get("nDCG@10", 0.0)),
+                -float(item["metrics"].get("Recall@100", 0.0)),
+                str(item["label"]),
+            )
+        )
+        selected = candidates[0]
+        all_results = [
+            {
+                "label": item["label"],
+                "model_path": str(item["path"]),
+                "metrics": item["metrics"],
+                "query_count": item["query_count"],
+                "failure_count": item["failure_count"],
+            }
+            for item in candidates
+        ]
+        return (
+            {"scifact_dev_selected_minilm": selected["retriever"]},
+            "dense_dev_selected",
+            {
+                "model": SCIFACT_FINETUNED_MINILM_MODEL,
+                "model_path": str(SCIFACT_FINETUNED_MINILM_PATH),
+                "selected_model_path": str(selected["path"]),
+                "mode": "scifact_finetuned_minilm_dev_selected_dense",
+                "top_k": TOP_K,
+                "max_length": 256,
+                "pooling": "mean",
+                "selection": {
+                    "split": "dev",
+                    "metric": "nDCG@10",
+                    "selected_label": selected["label"],
+                    "candidate_count": len(candidates),
+                    "all_results": all_results,
+                },
+                "note": "Selects among local SciFact-finetuned MiniLM checkpoints using NFCorpus dev qrels only, then evaluates the selected checkpoint on test.",
+            },
+            {"direct_transformers": {"usable": True}},
+            {
+                "k": TOP_K,
+                "max_length": 256,
+                "batch_size": 32,
+                "pooling": "mean",
+                "selection_split": "dev",
+                "selection_metric": "nDCG@10",
+                "selected_checkpoint": selected["label"],
+                "candidate_count": len(candidates),
+            },
         )
 
     if candidate_name == "bge_small_en_onnx":

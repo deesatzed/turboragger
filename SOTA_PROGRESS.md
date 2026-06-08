@@ -1411,3 +1411,52 @@ Conclusion:
 - It remains `0.15850512496934477` absolute `nDCG@10` below the selected SOTA target.
 - It remains `0.07360512496934479` absolute `nDCG@10` below the official BEIR comparator.
 - Tiny local SciFact-style fine-tuning is not a SOTA path for NFCorpus under this artifact surface; future fine-tuning must use a stronger base model, larger domain data, or a reranker objective.
+
+## 2026-06-08 - Dev-Selected SciFact-Finetuned MiniLM Checkpoint
+
+Rationale:
+
+- The root SciFact-finetuned MiniLM checkpoint failed, but five intermediate checkpoints are also complete local SentenceTransformer snapshots.
+- Selecting among those checkpoints by NFCorpus `test` would be leakage, so this branch selects by NFCorpus `dev` `nDCG@10` only, then evaluates the selected checkpoint on `test`.
+
+Command:
+
+```bash
+PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate scifact_dev_selected_minilm
+```
+
+Artifact:
+
+- `artifacts/runs/scifact_dev_selected_minilm_20260608T205002Z.json`
+
+Dev selection:
+
+| Checkpoint | Dev nDCG@10 | Dev Recall@100 |
+|---|---:|---:|
+| `checkpoint-9` | `0.30328459075499065` | `0.30134690653738905` |
+| `checkpoint-18` | `0.3019942589158048` | `0.3009931117316315` |
+| `checkpoint-36` | `0.30050877866450537` | `0.3011734211067443` |
+| `checkpoint-45` | `0.30007330269955695` | `0.29974749301213877` |
+| `final` | `0.30007330269955695` | `0.29974749301213877` |
+| `checkpoint-27` | `0.2997546758359658` | `0.3019637733442272` |
+
+Selected checkpoint:
+
+- `checkpoint-9`
+- `/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-9`
+
+Test result:
+
+| Candidate | nDCG@10 | Recall@100 | Runtime seconds | Queries | Failures |
+|---|---:|---:|---:|---:|---:|
+| `scifact_dev_selected_minilm` | `0.316500938704734` | `0.31019343221102363` | `115.023363` | 323 | 0 |
+
+Conclusion:
+
+- The branch is not promoted because it is far below the current best.
+- It loses `0.051082104003211615` absolute `nDCG@10` versus the current best branch.
+- It loses `0.022685150492755546` `Recall@100` versus the current best branch.
+- It improves direct MiniLM by only `0.0004997209025133786` absolute `nDCG@10`.
+- It improves the final SciFact checkpoint by `0.005106063674078787` absolute `nDCG@10`, validating the dev-selection guard but not creating a SOTA path.
+- It remains `0.15339906129526598` absolute `nDCG@10` below the selected SOTA target.
+- It remains `0.068499061295266` absolute `nDCG@10` below the official BEIR comparator.

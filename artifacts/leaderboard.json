@@ -12,7 +12,7 @@
     "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z",
     "timestamp_utc": "2026-06-08T19:27:56+00:00"
   },
-  "generated_at_utc": "2026-06-08T20:39:43+00:00",
+  "generated_at_utc": "2026-06-08T20:51:58+00:00",
   "runs": [
     {
       "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z.json",
@@ -403,6 +403,19 @@
       "retrieval_mode": "dense_onnx",
       "run_id": "xenova_minilm_onnx_20260608T144741Z",
       "timestamp_utc": "2026-06-08T14:48:00+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/scifact_dev_selected_minilm_20260608T205002Z.json",
+      "candidate": "scifact_dev_selected_minilm",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.31019343221102363,
+        "nDCG@10": 0.316500938704734
+      },
+      "query_count": 323,
+      "retrieval_mode": "dense_dev_selected",
+      "run_id": "scifact_dev_selected_minilm_20260608T205002Z",
+      "timestamp_utc": "2026-06-08T20:51:57+00:00"
     },
     {
       "artifact_path": "artifacts/runs/minilm_dense_20260608T132449Z.json",

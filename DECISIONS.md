@@ -1,5 +1,23 @@
 # DECISIONS.md
 
+## 2026-06-08 - Reject Dev-Selected SciFact-Finetuned MiniLM Checkpoint Family
+
+Decision: keep `scifact_dev_selected_minilm` as a valid no-test-leak checkpoint-selection ablation, but do not promote it.
+
+Reasons:
+
+- The branch selected among six complete local SciFact-finetuned MiniLM checkpoints using NFCorpus `dev` qrels only.
+- Dev selection chose `checkpoint-9` with dev `nDCG@10 = 0.30328459075499065`.
+- Test scoring produced `nDCG@10 = 0.316500938704734`, below the current best `0.3675830427079456`.
+- It improved direct MiniLM by only `0.0004997209025133786` absolute `nDCG@10`, which is not meaningful relative to the `0.10231695729205437` SOTA gap from the current best.
+- It also lowered `Recall@100` versus the current best from `0.3328785827037792` to `0.31019343221102363`.
+
+Consequences:
+
+- Run artifact: `artifacts/runs/scifact_dev_selected_minilm_20260608T205002Z.json`.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- Tiny SciFact-style MiniLM fine-tuning is now covered both as a final checkpoint and as a dev-selected checkpoint family; future fine-tuning work should use a stronger base model, more relevant data, or a reranker objective.
+
 ## 2026-06-08 - Reject Local SciFact-Finetuned MiniLM As A SOTA Path
 
 Decision: keep `scifact_finetuned_minilm` as a valid measured domain-supervised dense branch, but do not promote it.

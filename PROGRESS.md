@@ -739,6 +739,41 @@ Continue methodology work without expanding scope prematurely:
   - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
   - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
 
+### 2026-06-08 Continuation - Dev-Selected SciFact Checkpoint Family
+
+- Added `scifact_dev_selected_minilm` to `scripts/run_nfcorpus_candidate.py`.
+- The branch evaluates six complete local SciFact-finetuned MiniLM checkpoints on NFCorpus `dev`, selects by dev `nDCG@10`, then evaluates only the selected checkpoint on NFCorpus `test`.
+- Added focused candidate-runner coverage proving the branch selects the dev-best checkpoint and exposes only that selected retriever for test.
+- Added regression coverage proving `scripts/probe_local_model_inventory.py` records `selected_model_path` as a benchmarked model directory.
+- TDD red checks:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: failed before implementation with missing `SCIFACT_FINETUNED_MINILM_CANDIDATE_PATHS`.
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_local_model_inventory.py' -v`: failed before implementation because `benchmarked_model_dirs` ignored `selected_model_path`.
+- Focused green checks:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: 28 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_local_model_inventory.py' -v`: 7 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+- Benchmark command exited 0:
+  - `PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate scifact_dev_selected_minilm`
+- Generated `artifacts/runs/scifact_dev_selected_minilm_20260608T205002Z.json`.
+- Updated `artifacts/leaderboard.json`.
+- Dev selection chose `checkpoint-9`:
+  - Dev `nDCG@10 = 0.30328459075499065`.
+  - Dev `Recall@100 = 0.30134690653738905`.
+- Test result: `nDCG@10 = 0.316500938704734`, `Recall@100 = 0.31019343221102363`, 323 queries, 0 failures, runtime `115.023363` seconds.
+- This branch is rejected because it loses `0.051082104003211615` primary `nDCG@10` and `0.022685150492755546` `Recall@100` versus the current best.
+- It improves direct MiniLM by only `0.0004997209025133786` absolute `nDCG@10`.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- Current gap to selected SOTA target remains `0.10231695729205437`.
+- Current gap from the latest branch to selected SOTA target is `0.15339906129526598`.
+- Regenerated `artifacts/local_model_inventory.json`; `checkpoint-9` and the root SciFact checkpoint are now marked `benchmarked = true`, and the summary still reports `unmeasured_sota_candidate_count = 0`.
+- Full verification after the dev-selected SciFact checkpoint branch and docs update:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -v`: 83 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+  - JSON validation exited 0 for the dev-selected SciFact checkpoint run, current-best train/dev GBDT regression score-fusion run, local model inventory, leaderboard, and SOTA target.
+  - Root `git diff --check`: exited 0.
+  - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
+  - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
+
 ### 2026-06-08 Continuation - Late-Interaction Rerank Candidate Wiring
 
 - Added `src/turboragger/late_interaction.py`.

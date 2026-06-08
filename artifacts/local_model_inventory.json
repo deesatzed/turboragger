@@ -2,6 +2,7 @@
   "benchmarked_model_dirs": [
     "/Users/o2satz/.cache/huggingface/hub/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf",
     "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned",
+    "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-9",
     "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/BAAI/bge-large-zh-v1.5",
     "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/maidalun1020/bce-embedding-base_v1",
     "/Volumes/WS4TB/WS4TBr/finESS/node_modules/@xenova/transformers/.cache/Xenova/bge-small-en-v1.5",
@@ -172,7 +173,7 @@
       "unmeasured_sota_candidate": false
     },
     {
-      "benchmarked": false,
+      "benchmarked": true,
       "category": "uncategorized_model_file",
       "filename": "model.safetensors",
       "model_dir": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-9",
@@ -645,5 +646,5 @@
     "unmeasured_sota_candidate_count": 0,
     "unmeasured_sota_candidate_paths": []
   },
-  "timestamp_utc": "2026-06-08T20:46:00+00:00"
+  "timestamp_utc": "2026-06-08T20:56:13+00:00"
 }

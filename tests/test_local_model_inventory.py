@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import importlib.util
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -65,6 +68,31 @@ class LocalModelInventoryTests(unittest.TestCase):
 
         self.assertTrue(marked[0]["benchmarked"])
         self.assertFalse(marked[0]["unmeasured_sota_candidate"])
+
+    def test_benchmarked_model_dirs_include_selected_model_path(self):
+        script = load_inventory_script()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            runs = root / "artifacts" / "runs"
+            runs.mkdir(parents=True)
+            selected_path = root / "models" / "selected-checkpoint"
+            (runs / "run.json").write_text(
+                json.dumps({"retriever_config": {"selected_model_path": str(selected_path)}})
+            )
+
+            dirs = script.benchmarked_model_dirs(root)
+
+        self.assertEqual(dirs, [selected_path])
+
+
+def load_inventory_script():
+    root = Path(__file__).resolve().parents[1]
+    module_path = root / "scripts" / "probe_local_model_inventory.py"
+    spec = importlib.util.spec_from_file_location("probe_local_model_inventory", module_path)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
 
 
 if __name__ == "__main__":

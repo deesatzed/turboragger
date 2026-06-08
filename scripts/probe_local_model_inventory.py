@@ -50,6 +50,9 @@ def benchmarked_model_dirs(root: Path) -> list[Path]:
         model_path = config.get("model_path")
         if model_path:
             dirs.add(Path(model_path))
+        selected_model_path = config.get("selected_model_path")
+        if selected_model_path:
+            dirs.add(Path(selected_model_path))
         for path in config.get("model_paths", {}).values():
             dirs.add(Path(path))
     return sorted(dirs, key=str)
