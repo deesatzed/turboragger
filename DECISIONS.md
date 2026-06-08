@@ -1,5 +1,24 @@
 # DECISIONS.md
 
+## 2026-06-08 - Reject Current-Best Plus Dev-Selected SciFact Score Fusion
+
+Decision: keep `bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion` as a valid no-test-leak complement ablation, but do not promote it.
+
+Reasons:
+
+- The branch used the current best graded-regression score-fusion method as `current_best_primary`.
+- The secondary branch selected `checkpoint-9` from the local SciFact-finetuned MiniLM checkpoint family using NFCorpus `dev` qrels only.
+- Second-stage dev calibration selected `current_best_primary = 0.5` and `scifact_secondary = 0.0`.
+- Test scoring produced `nDCG@10 = 0.3675830427079456`, exactly tying the current best primary metric.
+- Test scoring lowered `Recall@100` from `0.3328785827037792` to `0.33050103876645803`.
+- Since `GOAL.md` requires primary-metric progress and a defensible secondary metric surface, an equal primary score with worse recall is not a promotion.
+
+Consequences:
+
+- Run artifact: `artifacts/runs/bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion_20260608T210404Z.json`.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- The SciFact-finetuned MiniLM family is now covered standalone, dev-selected, and as a dev-calibrated complement to the current best; future fine-tuning should change the base model, data scale, or objective rather than reusing this tiny checkpoint family.
+
 ## 2026-06-08 - Reject Dev-Selected SciFact-Finetuned MiniLM Checkpoint Family
 
 Decision: keep `scifact_dev_selected_minilm` as a valid no-test-leak checkpoint-selection ablation, but do not promote it.

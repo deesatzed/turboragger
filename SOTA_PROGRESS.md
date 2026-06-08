@@ -1460,3 +1460,53 @@ Conclusion:
 - It improves the final SciFact checkpoint by `0.005106063674078787` absolute `nDCG@10`, validating the dev-selection guard but not creating a SOTA path.
 - It remains `0.15339906129526598` absolute `nDCG@10` below the selected SOTA target.
 - It remains `0.068499061295266` absolute `nDCG@10` below the official BEIR comparator.
+
+## 2026-06-08 - Current-Best Plus Dev-Selected SciFact Score Fusion
+
+Rationale:
+
+- The standalone dev-selected SciFact checkpoint branch was weak, but it could still have complementary signal against the current best learned fusion anchor.
+- This branch dev-calibrates the current graded-regression score-fusion anchor against the dev-selected SciFact checkpoint branch without using NFCorpus `test` qrels for training, checkpoint selection, or weight calibration.
+
+Command:
+
+```bash
+PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion
+```
+
+Artifact:
+
+- `artifacts/runs/bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion_20260608T210404Z.json`
+
+Dev calibration:
+
+| Branch | Selected weight |
+|---|---:|
+| `current_best_primary` | `0.5` |
+| `scifact_secondary` | `0.0` |
+
+Calibration metrics:
+
+- Dev `nDCG@10 = 0.34652923156548504`
+- Dev `Recall@100 = 0.32345304232384053`
+
+SciFact selected checkpoint:
+
+- `checkpoint-9`
+- Dev `nDCG@10 = 0.30328459075499065`
+- Dev `Recall@100 = 0.30134690653738905`
+
+Test result:
+
+| Candidate | nDCG@10 | Recall@100 | Runtime seconds | Queries | Failures |
+|---|---:|---:|---:|---:|---:|
+| `bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion` | `0.3675830427079456` | `0.33050103876645803` | `480.304969` | 323 | 0 |
+
+Conclusion:
+
+- The branch is not promoted because it ties the current best on primary `nDCG@10` and reduces `Recall@100`.
+- It changes primary `nDCG@10` by `0.0` versus the current best.
+- It loses `0.002377543937321147` `Recall@100` versus the current best.
+- It remains `0.10231695729205437` absolute `nDCG@10` below the selected SOTA target.
+- It remains `0.01741695729205439` absolute `nDCG@10` below the official BEIR comparator.
+- Dev calibration assigned the SciFact secondary branch weight `0.0`, which is direct evidence that this tiny fine-tuned checkpoint family is not contributing useful complementary signal to the current anchor.

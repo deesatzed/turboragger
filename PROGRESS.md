@@ -774,6 +774,42 @@ Continue methodology work without expanding scope prematurely:
   - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
   - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
 
+### 2026-06-08 Continuation - Current-Best Plus Dev-Selected SciFact Fusion
+
+- Added `bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion` to `scripts/run_nfcorpus_candidate.py`.
+- The branch recursively builds the current best graded-regression score-fusion anchor and the `scifact_dev_selected_minilm` branch, then performs second-stage weight calibration on NFCorpus `dev` only.
+- Added focused candidate-runner coverage proving the branch:
+  - uses dev-calibrated weights;
+  - records the selected SciFact checkpoint;
+  - carries the current-best and SciFact sub-branch configs into the artifact metadata.
+- TDD red check:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: failed before implementation with `ValueError: Unsupported candidate: bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion`.
+- Focused green checks:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: 29 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+- Benchmark command exited 0:
+  - `PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion`
+- Generated `artifacts/runs/bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion_20260608T210404Z.json`.
+- Updated `artifacts/leaderboard.json`.
+- Dev calibration selected:
+  - `current_best_primary = 0.5`
+  - `scifact_secondary = 0.0`
+- Dev calibration metrics:
+  - `nDCG@10 = 0.34652923156548504`
+  - `Recall@100 = 0.32345304232384053`
+- SciFact branch selected `checkpoint-9` again, with dev `nDCG@10 = 0.30328459075499065` and dev `Recall@100 = 0.30134690653738905`.
+- Test result: `nDCG@10 = 0.3675830427079456`, `Recall@100 = 0.33050103876645803`, 323 queries, 0 failures, runtime `480.304969` seconds.
+- This branch is not promoted because it ties the current best primary `nDCG@10` and loses `0.002377543937321147` `Recall@100` versus the current best.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- Current gap to selected SOTA target remains `0.10231695729205437`.
+- Full verification after the current-best plus dev-selected SciFact score-fusion branch and docs update:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -v`: 84 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+  - JSON validation exited 0 for the new current-best plus dev-selected SciFact score-fusion run, current-best train/dev GBDT regression score-fusion run, local model inventory, leaderboard, and SOTA target.
+  - Root `git diff --check`: exited 0.
+  - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
+  - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
+
 ### 2026-06-08 Continuation - Late-Interaction Rerank Candidate Wiring
 
 - Added `src/turboragger/late_interaction.py`.

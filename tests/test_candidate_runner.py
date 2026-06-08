@@ -798,6 +798,86 @@ class CandidateRunnerTests(unittest.TestCase):
         self.assertEqual(hyperparameters["weights"]["current_best_primary"], 2.0)
         self.assertIn("sklearn", dependency)
 
+    def test_current_best_scifact_dev_selected_score_fusion_uses_dev_weights(self):
+        runner = load_candidate_runner()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            model_path = Path(temp_dir)
+            scifact_path = Path(temp_dir) / "checkpoint-9"
+            scifact_path.mkdir()
+            fitted_model = object()
+            with (
+                mock.patch.object(runner, "BGE_SMALL_EN_ONNX_PATH", model_path),
+                mock.patch.object(runner, "XENOVA_MINILM_ONNX_PATH", model_path),
+                mock.patch.object(
+                    runner,
+                    "SCIFACT_FINETUNED_MINILM_CANDIDATE_PATHS",
+                    [("checkpoint-9", scifact_path)],
+                ),
+                mock.patch.object(runner, "OnnxDenseRetriever", return_value=StaticRetriever()),
+                mock.patch.object(runner, "BM25Retriever", return_value=StaticRetriever()),
+                mock.patch.object(runner, "TransformerDenseRetriever", return_value=StaticRetriever()),
+                mock.patch.object(
+                    runner,
+                    "fit_candidate_gbdt_regression_fusion",
+                    return_value={
+                        "model": fitted_model,
+                        "feature_names": ["score:bge_small_cls_onnx"],
+                        "train_query_count": 1,
+                        "train_row_count": 2,
+                        "positive_row_count": 1,
+                        "algorithm": "HistGradientBoostingRegressor",
+                        "model_params": {"max_iter": 25},
+                        "max_relevance_target": 2.0,
+                        "positive_sample_weight": 4.0,
+                        "dependency": {"sklearn": {"usable": True}},
+                    },
+                ),
+                mock.patch.object(
+                    runner,
+                    "calibrate_candidate_weights",
+                    side_effect=[
+                        {
+                            "weights": {
+                                "score_fusion_primary": 1.0,
+                                "gbdt_regression_secondary": 1.5,
+                            },
+                            "metrics": {"nDCG@10": 0.5, "Recall@100": 0.5},
+                            "split": "dev",
+                            "query_count": 1,
+                            "grid_size": 2,
+                        },
+                        {
+                            "weights": {
+                                "current_best_primary": 1.5,
+                                "scifact_secondary": 0.5,
+                            },
+                            "metrics": {"nDCG@10": 1.0, "Recall@100": 1.0},
+                            "split": "dev",
+                            "query_count": 1,
+                            "grid_size": 2,
+                        },
+                    ],
+                ),
+            ):
+                retrievers, mode, config, dependency, hyperparameters = runner.build_candidate(
+                    "bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion",
+                    {"d1": {"title": "title", "text": "text"}},
+                    training_queries={"q1": "query"},
+                    training_qrels={"q1": {"d1": 2}},
+                    calibration_queries={"q1": "query"},
+                    calibration_qrels={"q1": {"d1": 1}},
+                )
+
+        self.assertEqual(mode, "multi_dense_sparse_scifact_dev_selected_gbdt_regression_dev_score_fusion")
+        self.assertIsInstance(retrievers["score_fusion"], ScoreFusionRetriever)
+        self.assertEqual(retrievers["score_fusion"].weights["current_best_primary"], 1.5)
+        self.assertEqual(retrievers["score_fusion"].weights["scifact_secondary"], 0.5)
+        self.assertEqual(config["calibration"]["weights"]["scifact_secondary"], 0.5)
+        self.assertEqual(config["scifact_branch"]["config"]["selection"]["selected_label"], "checkpoint-9")
+        self.assertEqual(hyperparameters["weights"]["current_best_primary"], 1.5)
+        self.assertEqual(hyperparameters["scifact_hyperparameters"]["selected_checkpoint"], "checkpoint-9")
+        self.assertIn("sklearn", dependency)
+
     def test_train_dev_gbdt_calibrated_score_fusion_uses_gbdt_as_weighted_branch(self):
         runner = load_candidate_runner()
         with tempfile.TemporaryDirectory() as temp_dir:

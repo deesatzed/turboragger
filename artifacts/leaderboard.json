@@ -12,7 +12,7 @@
     "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z",
     "timestamp_utc": "2026-06-08T19:27:56+00:00"
   },
-  "generated_at_utc": "2026-06-08T20:51:58+00:00",
+  "generated_at_utc": "2026-06-08T21:12:06+00:00",
   "runs": [
     {
       "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z.json",
@@ -26,6 +26,19 @@
       "retrieval_mode": "multi_dense_sparse_train_dev_gbdt_regression_dev_score_fusion",
       "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z",
       "timestamp_utc": "2026-06-08T19:27:56+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion_20260608T210404Z.json",
+      "candidate": "bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.33050103876645803,
+        "nDCG@10": 0.3675830427079456
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_scifact_dev_selected_gbdt_regression_dev_score_fusion",
+      "run_id": "bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion_20260608T210404Z",
+      "timestamp_utc": "2026-06-08T21:12:05+00:00"
     },
     {
       "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_score_fusion_20260608T184157Z.json",
