@@ -1,19 +1,32 @@
 {
   "best_run": {
-    "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z.json",
-    "candidate": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion",
+    "artifact_path": "artifacts/runs/bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion_20260608T214206Z.json",
+    "candidate": "bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion",
     "failure_count": 0,
     "metrics": {
-      "Recall@100": 0.3328785827037792,
-      "nDCG@10": 0.3675830427079456
+      "Recall@100": 0.33559899868294146,
+      "nDCG@10": 0.369215383024794
     },
     "query_count": 323,
-    "retrieval_mode": "multi_dense_sparse_train_dev_gbdt_regression_dev_score_fusion",
-    "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z",
-    "timestamp_utc": "2026-06-08T19:27:56+00:00"
+    "retrieval_mode": "multi_dense_sparse_dense_prf_dev_selected_gbdt_regression_dev_score_fusion",
+    "run_id": "bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion_20260608T214206Z",
+    "timestamp_utc": "2026-06-08T21:50:33+00:00"
   },
-  "generated_at_utc": "2026-06-08T21:34:07+00:00",
+  "generated_at_utc": "2026-06-08T21:50:34+00:00",
   "runs": [
+    {
+      "artifact_path": "artifacts/runs/bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion_20260608T214206Z.json",
+      "candidate": "bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.33559899868294146,
+        "nDCG@10": 0.369215383024794
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_dense_prf_dev_selected_gbdt_regression_dev_score_fusion",
+      "run_id": "bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion_20260608T214206Z",
+      "timestamp_utc": "2026-06-08T21:50:33+00:00"
+    },
     {
       "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z.json",
       "candidate": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion",

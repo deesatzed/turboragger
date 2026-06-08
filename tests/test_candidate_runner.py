@@ -935,6 +935,90 @@ class CandidateRunnerTests(unittest.TestCase):
         self.assertEqual(hyperparameters["scifact_hyperparameters"]["selected_checkpoint"], "checkpoint-9")
         self.assertIn("sklearn", dependency)
 
+    def test_current_best_dense_prf_dev_selected_score_fusion_uses_dev_weights(self):
+        runner = load_candidate_runner()
+
+        def dense_prf_side_effect(base_retriever, source, feedback_docs, query_weight, feedback_weight):
+            del base_retriever, source, query_weight
+            if feedback_docs == 5 and feedback_weight == 1.0:
+                return RankedStaticRetriever(["good", "bad"])
+            return RankedStaticRetriever(["bad", "good"])
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            model_path = Path(temp_dir)
+            fitted_model = object()
+            with (
+                mock.patch.object(runner, "BGE_SMALL_EN_ONNX_PATH", model_path),
+                mock.patch.object(runner, "XENOVA_MINILM_ONNX_PATH", model_path),
+                mock.patch.object(runner, "OnnxDenseRetriever", return_value=StaticRetriever()),
+                mock.patch.object(runner, "BM25Retriever", return_value=StaticRetriever()),
+                mock.patch.object(runner, "DensePrfRetriever", side_effect=dense_prf_side_effect),
+                mock.patch.object(
+                    runner,
+                    "fit_candidate_gbdt_regression_fusion",
+                    return_value={
+                        "model": fitted_model,
+                        "feature_names": ["score:bge_small_cls_onnx"],
+                        "train_query_count": 1,
+                        "train_row_count": 2,
+                        "positive_row_count": 1,
+                        "algorithm": "HistGradientBoostingRegressor",
+                        "model_params": {"max_iter": 25},
+                        "max_relevance_target": 2.0,
+                        "positive_sample_weight": 4.0,
+                        "dependency": {"sklearn": {"usable": True}},
+                    },
+                ),
+                mock.patch.object(
+                    runner,
+                    "calibrate_candidate_weights",
+                    side_effect=[
+                        {
+                            "weights": {
+                                "score_fusion_primary": 1.0,
+                                "gbdt_regression_secondary": 1.5,
+                            },
+                            "metrics": {"nDCG@10": 0.5, "Recall@100": 0.5},
+                            "split": "dev",
+                            "query_count": 1,
+                            "grid_size": 2,
+                        },
+                        {
+                            "weights": {
+                                "current_best_primary": 1.5,
+                                "dense_prf_secondary": 0.5,
+                            },
+                            "metrics": {"nDCG@10": 1.0, "Recall@100": 1.0},
+                            "split": "dev",
+                            "query_count": 1,
+                            "grid_size": 2,
+                        },
+                    ],
+                ),
+            ):
+                retrievers, mode, config, dependency, hyperparameters = runner.build_candidate(
+                    "bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion",
+                    {
+                        "good": {"title": "good", "text": ""},
+                        "bad": {"title": "bad", "text": ""},
+                    },
+                    training_queries={"q1": "query"},
+                    training_qrels={"q1": {"good": 2}},
+                    calibration_queries={"q1": "query"},
+                    calibration_qrels={"q1": {"good": 1}},
+                )
+
+        self.assertEqual(mode, "multi_dense_sparse_dense_prf_dev_selected_gbdt_regression_dev_score_fusion")
+        self.assertIsInstance(retrievers["score_fusion"], ScoreFusionRetriever)
+        self.assertEqual(retrievers["score_fusion"].weights["current_best_primary"], 1.5)
+        self.assertEqual(retrievers["score_fusion"].weights["dense_prf_secondary"], 0.5)
+        self.assertEqual(config["calibration"]["weights"]["dense_prf_secondary"], 0.5)
+        self.assertEqual(config["dense_prf_branch"]["config"]["selection"]["selected_feedback_docs"], 5)
+        self.assertEqual(config["dense_prf_branch"]["config"]["selection"]["selected_feedback_weight"], 1.0)
+        self.assertEqual(hyperparameters["dense_prf_hyperparameters"]["feedback_docs"], 5)
+        self.assertEqual(hyperparameters["dense_prf_hyperparameters"]["feedback_weight"], 1.0)
+        self.assertIn("sklearn", dependency)
+
     def test_train_dev_gbdt_calibrated_score_fusion_uses_gbdt_as_weighted_branch(self):
         runner = load_candidate_runner()
         with tempfile.TemporaryDirectory() as temp_dir:

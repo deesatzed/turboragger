@@ -96,6 +96,7 @@ def main() -> int:
             "bge_small_late_interaction_score_fusion_rerank",
             "bge_small_late_interaction_gbdt_regression_dev_score_fusion",
             "bge_small_gbdt_regression_scifact_dev_selected_dev_score_fusion",
+            "bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion",
             "bge_small_mean_xenova_minilm_bm25_score_fusion",
             "bge_small_dual_pool_xenova_minilm_bm25_score_fusion",
             "bge_small_dual_pool_xenova_minilm_bm25_rank_score_fusion",
@@ -1444,6 +1445,80 @@ def build_candidate(
                 "calibration": calibration,
                 "current_best_hyperparameters": current_hyperparameters,
                 "scifact_hyperparameters": scifact_hyperparameters,
+            },
+        )
+
+    if candidate_name == "bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion":
+        if not training_queries or not training_qrels:
+            raise ValueError("Training queries and qrels are required for this candidate.")
+        if not calibration_queries or not calibration_qrels:
+            raise ValueError("Dev calibration queries and qrels are required for this candidate.")
+        current_retrievers, current_mode, current_config, current_dependency, current_hyperparameters = build_candidate(
+            "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion",
+            corpus,
+            training_queries=training_queries,
+            training_qrels=training_qrels,
+            calibration_queries=calibration_queries,
+            calibration_qrels=calibration_qrels,
+        )
+        dense_prf_retrievers, dense_prf_mode, dense_prf_config, dense_prf_dependency, dense_prf_hyperparameters = build_candidate(
+            "bge_small_en_onnx_dense_prf_dev_selected",
+            corpus,
+            calibration_queries=calibration_queries,
+            calibration_qrels=calibration_qrels,
+        )
+        branch_retrievers = {
+            "current_best_primary": current_retrievers["score_fusion"],
+            "dense_prf_secondary": dense_prf_retrievers["bge_small_en_onnx_dense_prf_dev_selected"],
+        }
+        branch_names = list(branch_retrievers)
+        calibration = calibrate_candidate_weights(
+            retrievers=branch_retrievers,
+            calibration_queries=calibration_queries,
+            calibration_qrels=calibration_qrels,
+            branch_names=branch_names,
+        )
+        weights = calibration["weights"]
+        return (
+            {
+                "score_fusion": ScoreFusionRetriever(
+                    branch_retrievers,
+                    source="bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion",
+                    weights=weights,
+                )
+            },
+            "multi_dense_sparse_dense_prf_dev_selected_gbdt_regression_dev_score_fusion",
+            {
+                "model": "Current best graded-regression score fusion + dev-selected BGE-small dense PRF",
+                "mode": "bge_small_gbdt_regression_plus_dense_prf_dev_selected_dev_score_fusion",
+                "top_k": TOP_K,
+                "score_normalization": "minmax_per_branch",
+                "fusion_branches": branch_names,
+                "weights": weights,
+                "calibration": calibration,
+                "current_best_branch": {
+                    "retrieval_mode": current_mode,
+                    "config": current_config,
+                    "hyperparameters": current_hyperparameters,
+                },
+                "dense_prf_branch": {
+                    "retrieval_mode": dense_prf_mode,
+                    "config": dense_prf_config,
+                    "hyperparameters": dense_prf_hyperparameters,
+                },
+                "note": "Second-stage dev calibration over the current best and dev-selected dense PRF branch; no test qrels are used for training, selection, or calibration.",
+            },
+            {
+                **current_dependency,
+                **dense_prf_dependency,
+            },
+            {
+                "k": TOP_K,
+                "score_normalization": "minmax_per_branch",
+                "weights": weights,
+                "calibration": calibration,
+                "current_best_hyperparameters": current_hyperparameters,
+                "dense_prf_hyperparameters": dense_prf_hyperparameters,
             },
         )
 

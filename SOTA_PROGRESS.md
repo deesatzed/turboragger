@@ -1601,3 +1601,50 @@ Conclusion:
 - It remains `0.12056326357615682` absolute `nDCG@10` below the selected SOTA target.
 - It remains `0.035663263576156845` absolute `nDCG@10` below the official BEIR comparator.
 - Dev-selected dense PRF is a legitimate query-expansion improvement over direct BGE-small, but it still does not replace the need for a stronger retriever/reranker.
+
+## 2026-06-08 - Current-Best Plus Dev-Selected Dense PRF Score Fusion
+
+Rationale:
+
+- Dev-selected dense PRF improved direct BGE-small ONNX by `0.007091771604310126` `nDCG@10`, but the standalone branch remained below the graded-regression anchor.
+- This branch tests whether the dev-selected PRF signal is complementary when fused against the current best graded-regression score-fusion anchor.
+- The branch preserves split hygiene: train qrels fit the graded-regression anchor, dev qrels select dense PRF parameters and second-stage fusion weights, and test qrels are used only for final evaluation.
+
+Command:
+
+```bash
+PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion
+```
+
+Artifact:
+
+- `artifacts/runs/bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion_20260608T214206Z.json`
+
+Dev selection and calibration:
+
+| Item | Value |
+|---|---:|
+| Dense PRF `feedback_docs` | `3` |
+| Dense PRF `query_weight` | `1.0` |
+| Dense PRF `feedback_weight` | `0.5` |
+| Dense PRF dev `nDCG@10` | `0.3307341905658255` |
+| Dense PRF dev `Recall@100` | `0.3191282770446407` |
+| Second-stage `current_best_primary` | `2.0` |
+| Second-stage `dense_prf_secondary` | `0.5` |
+| Second-stage dev `nDCG@10` | `0.34775638278253135` |
+| Second-stage dev `Recall@100` | `0.33530330911288864` |
+
+Test result:
+
+| Candidate | nDCG@10 | Recall@100 | Runtime seconds | Queries | Failures |
+|---|---:|---:|---:|---:|---:|
+| `bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion` | `0.369215383024794` | `0.33559899868294146` | `507.268217` | 323 | 0 |
+
+Conclusion:
+
+- The branch is promoted as the new current best.
+- It improves the previous best by `0.0016323403168483908` absolute `nDCG@10`.
+- It improves the previous best by `0.002720415979162283` `Recall@100`.
+- It remains `0.10068461697520598` absolute `nDCG@10` below the selected SOTA target.
+- It remains `0.015784616975206` absolute `nDCG@10` below the official BEIR comparator.
+- Dense PRF is useful as a complement to the graded-regression anchor, but the remaining gap is still too large for more same-source fusion to be the primary SOTA path.

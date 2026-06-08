@@ -1,5 +1,25 @@
 # DECISIONS.md
 
+## 2026-06-08 - Promote Current-Best Plus Dev-Selected Dense PRF Score Fusion
+
+Decision: promote `bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion` as the current best local method, while explicitly not claiming SOTA.
+
+Reasons:
+
+- The branch keeps train/dev/test separation: graded-regression anchor training uses NFCorpus `train`, dense PRF parameter selection uses NFCorpus `dev`, second-stage fusion calibration uses NFCorpus `dev`, and NFCorpus `test` is used only for final evaluation.
+- Dense PRF selection chose `feedback_docs = 3`, `query_weight = 1.0`, and `feedback_weight = 0.5` on dev.
+- Second-stage dev calibration selected `current_best_primary = 2.0` and `dense_prf_secondary = 0.5`.
+- Test scoring produced `nDCG@10 = 0.369215383024794`, above the previous best `0.3675830427079456`.
+- Test scoring also improved `Recall@100` from `0.3328785827037792` to `0.33559899868294146`.
+
+Consequences:
+
+- New best artifact: `artifacts/runs/bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion_20260608T214206Z.json`.
+- The absolute primary-metric improvement is `0.0016323403168483908` `nDCG@10`.
+- The absolute secondary-metric improvement is `0.002720415979162283` `Recall@100`.
+- SOTA remains unachieved; the current gap to selected target `0.4699` is `0.10068461697520598`.
+- The next credible SOTA path still requires a materially stronger English retriever, reranker, or distinct retrieval signal.
+
 ## 2026-06-08 - Reject Dev-Selected BGE-Small Dense Pseudo-Relevance Feedback
 
 Decision: keep `bge_small_en_onnx_dense_prf_dev_selected` as a valid no-test-leak query-expansion ablation, but do not promote it.

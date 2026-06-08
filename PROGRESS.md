@@ -876,6 +876,44 @@ Continue methodology work without expanding scope prematurely:
   - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
   - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
 
+### 2026-06-08 Continuation - Current-Best Plus Dev-Selected Dense PRF Fusion
+
+- Added `bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion` to `scripts/run_nfcorpus_candidate.py`.
+- The branch recursively builds the current best train/dev graded-regression score-fusion anchor and the dev-selected BGE-small dense PRF branch, then calibrates a second-stage two-branch score fusion on NFCorpus `dev`.
+- TDD red check:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: failed before implementation with `ValueError: Unsupported candidate: bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion`.
+- Focused green checks:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: 32 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+- Benchmark command exited 0:
+  - `PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion`
+- The benchmark emitted a non-fatal `joblib` physical-core warning during sklearn use, then completed.
+- Generated `artifacts/runs/bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion_20260608T214206Z.json`.
+- Updated `artifacts/leaderboard.json`.
+- Dense PRF branch selection reused:
+  - `feedback_docs = 3`
+  - `query_weight = 1.0`
+  - `feedback_weight = 0.5`
+- Second-stage dev calibration selected:
+  - `current_best_primary = 2.0`
+  - `dense_prf_secondary = 0.5`
+- Second-stage dev metrics:
+  - `nDCG@10 = 0.34775638278253135`
+  - `Recall@100 = 0.33530330911288864`
+- Test result: `nDCG@10 = 0.369215383024794`, `Recall@100 = 0.33559899868294146`, 323 queries, 0 failures, runtime `507.268217` seconds.
+- This branch is promoted because it improves the previous best by `0.0016323403168483908` primary `nDCG@10` and `0.002720415979162283` `Recall@100`.
+- Current best is now `bge_small_gbdt_regression_dense_prf_dev_selected_dev_score_fusion`.
+- Current gap to selected SOTA target is `0.10068461697520598`.
+- Current gap to official BEIR comparator is `0.015784616975206`.
+- Full verification after the current-best plus dev-selected dense PRF fusion branch and docs update:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -v`: 88 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+  - JSON validation exited 0 for the current-best plus dev-selected dense PRF run, leaderboard, SOTA target, and local model inventory.
+  - Root `git diff --check`: exited 0.
+  - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
+  - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
+  - Root `.git` metadata remains sandbox-limited; publishing continues through `/private/tmp/turboragger-gitstage.y8y4cf`.
+
 ### 2026-06-08 Continuation - Late-Interaction Rerank Candidate Wiring
 
 - Added `src/turboragger/late_interaction.py`.
