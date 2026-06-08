@@ -1510,3 +1510,44 @@ Conclusion:
 - It remains `0.10231695729205437` absolute `nDCG@10` below the selected SOTA target.
 - It remains `0.01741695729205439` absolute `nDCG@10` below the official BEIR comparator.
 - Dev calibration assigned the SciFact secondary branch weight `0.0`, which is direct evidence that this tiny fine-tuned checkpoint family is not contributing useful complementary signal to the current anchor.
+
+## 2026-06-08 - BGE-Small Dense Pseudo-Relevance Feedback
+
+Rationale:
+
+- Broader read-only discovery did not find a complete stronger local English retriever or reranker beyond already measured candidates.
+- Since model acquisition was not available in-session, this branch tests a distinct qrels-free query-expansion method: Rocchio-style dense pseudo-relevance feedback over BGE-small ONNX top documents.
+- The method uses the initial dense top-10 document vectors to shift the query vector before final retrieval; NFCorpus `test` qrels are used only for final evaluation.
+
+Command:
+
+```bash
+PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_en_onnx_dense_prf
+```
+
+Artifact:
+
+- `artifacts/runs/bge_small_en_onnx_dense_prf_20260608T212303Z.json`
+
+Configuration:
+
+| Parameter | Value |
+|---|---:|
+| `feedback_docs` | `10` |
+| `query_weight` | `1.0` |
+| `feedback_weight` | `0.5` |
+
+Test result:
+
+| Candidate | nDCG@10 | Recall@100 | Runtime seconds | Queries | Failures |
+|---|---:|---:|---:|---:|---:|
+| `bge_small_en_onnx_dense_prf` | `0.3425690018844359` | `0.3105355971312376` | `144.642333` | 323 | 0 |
+
+Conclusion:
+
+- The branch is not promoted because it remains well below the current best.
+- It improves direct `bge_small_en_onnx` by `0.0003240370649028601` absolute `nDCG@10`, but loses `0.0015122627919349485` `Recall@100` versus direct BGE-small.
+- It loses `0.02501404082350972` absolute `nDCG@10` and `0.022342985572541607` `Recall@100` versus the current best branch.
+- It remains `0.1273309981155641` absolute `nDCG@10` below the selected SOTA target.
+- It remains `0.04243099811556411` absolute `nDCG@10` below the official BEIR comparator.
+- Dense PRF gives a tiny direct-BGE ranking gain but not a SOTA-moving signal; further query expansion should involve a stronger generator/retriever or train/dev-selected parameters rather than more fixed PRF over the same weak model.

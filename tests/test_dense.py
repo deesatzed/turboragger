@@ -5,6 +5,7 @@ import torch
 
 from turboragger.dense import (
     DenseVectorIndex,
+    dense_prf_query_vector,
     find_cached_minilm_snapshot,
     pad_token_batch,
     pool_last_hidden_state,
@@ -27,6 +28,18 @@ class DenseUtilityTests(unittest.TestCase):
 
     def test_find_cached_minilm_snapshot_returns_none_for_missing_root(self):
         self.assertIsNone(find_cached_minilm_snapshot(cache_root="/path/that/does/not/exist", include_default=False))
+
+    def test_dense_prf_query_vector_adds_feedback_centroid(self):
+        expanded = dense_prf_query_vector(
+            np.array([1.0, 0.0], dtype=np.float32),
+            np.array([[0.0, 1.0]], dtype=np.float32),
+            query_weight=1.0,
+            feedback_weight=2.0,
+        )
+
+        expected = np.array([1.0, 2.0], dtype=np.float32)
+        expected = expected / np.linalg.norm(expected)
+        self.assertTrue(np.allclose(expanded, expected))
 
     def test_pad_token_batch_pads_ids_masks_and_types(self):
         batch = pad_token_batch(

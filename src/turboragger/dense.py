@@ -110,6 +110,56 @@ class MiniLMDenseRetriever(TransformerDenseRetriever):
         )
 
 
+class DensePrfRetriever:
+    def __init__(
+        self,
+        base_retriever: TransformerDenseRetriever | "OnnxDenseRetriever",
+        source: str,
+        feedback_docs: int = 10,
+        query_weight: float = 1.0,
+        feedback_weight: float = 0.5,
+    ):
+        if feedback_docs < 1:
+            raise ValueError("feedback_docs must be at least 1.")
+        if query_weight < 0.0:
+            raise ValueError("query_weight must be non-negative.")
+        if feedback_weight < 0.0:
+            raise ValueError("feedback_weight must be non-negative.")
+        self.base_retriever = base_retriever
+        self.source = source
+        self.feedback_docs = feedback_docs
+        self.query_weight = query_weight
+        self.feedback_weight = feedback_weight
+        self._doc_index_by_id = {
+            doc_id: index
+            for index, doc_id in enumerate(base_retriever.index.doc_ids)
+        }
+
+    def retrieve(self, query: str, k: int = 100) -> list[RetrievalResult]:
+        query_text = f"{getattr(self.base_retriever, 'query_prefix', '')}{query}"
+        query_vector = self.base_retriever.encode([query_text])[0]
+        initial = self.base_retriever.index.search(query_vector, k=max(k, self.feedback_docs))
+        feedback_vectors = np.asarray(
+            [
+                self.base_retriever.index.vectors[self._doc_index_by_id[result.doc_id]]
+                for result in initial[: self.feedback_docs]
+                if result.doc_id in self._doc_index_by_id
+            ],
+            dtype=np.float32,
+        )
+        expanded_query = dense_prf_query_vector(
+            query_vector,
+            feedback_vectors,
+            query_weight=self.query_weight,
+            feedback_weight=self.feedback_weight,
+        )
+        results = self.base_retriever.index.search(expanded_query, k=k)
+        return [
+            RetrievalResult(result.doc_id, result.score, self.source)
+            for result in results
+        ]
+
+
 class OnnxDenseRetriever:
     def __init__(
         self,
@@ -202,6 +252,24 @@ def _normalize(vectors: np.ndarray) -> np.ndarray:
     norms = np.linalg.norm(vectors, axis=1, keepdims=True)
     norms[norms == 0.0] = 1.0
     return vectors / norms
+
+
+def dense_prf_query_vector(
+    query_vector: np.ndarray,
+    feedback_vectors: np.ndarray,
+    *,
+    query_weight: float = 1.0,
+    feedback_weight: float = 0.5,
+) -> np.ndarray:
+    query = np.asarray(query_vector, dtype=np.float32).reshape(-1)
+    feedback = np.asarray(feedback_vectors, dtype=np.float32)
+    if feedback.size == 0:
+        return _normalize(query.reshape(1, -1))[0]
+    if feedback.ndim == 1:
+        feedback = feedback.reshape(1, -1)
+    centroid = feedback.mean(axis=0)
+    expanded = query_weight * query + feedback_weight * centroid
+    return _normalize(expanded.reshape(1, -1))[0]
 
 
 def pad_token_batch(

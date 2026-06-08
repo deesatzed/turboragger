@@ -13,11 +13,11 @@
 
 - Frontier mode: evidence-gated benchmark optimization.
 - Current optimize submode: exploit/fusion audit over existing local source set.
-- Candidate brief count: 12 active/recent.
+- Candidate brief count: 13 active/recent.
 - Promoted line count: 1 current local anchor.
 - Current smoke queue: none.
 - Current full-eval queue: stronger English retriever or local reranker once available.
-- Stagnation check: same-source fusion, learned calibration, deeper same-source candidate pools, graded-regression deeper candidate pools, current-source token MaxSim late interaction, second-stage late-interaction calibration, tiny SciFact-style domain fine-tuning, dev-selected tiny SciFact checkpoints, and current-best plus dev-selected SciFact fusion have not closed the SOTA gap.
+- Stagnation check: same-source fusion, learned calibration, deeper same-source candidate pools, graded-regression deeper candidate pools, current-source token MaxSim late interaction, second-stage late-interaction calibration, tiny SciFact-style domain fine-tuning, dev-selected tiny SciFact checkpoints, current-best plus dev-selected SciFact fusion, BM25 PRF, and dense PRF have not closed the SOTA gap.
 - Next concrete action: obtain or discover a materially stronger English retrieval/reranking signal; do not spend more long runs on same-source calibration unless the candidate changes the signal family.
 
 ## Verification Surface

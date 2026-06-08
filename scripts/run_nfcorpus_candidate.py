@@ -13,6 +13,7 @@ from turboragger.benchmark import build_candidate_payload, write_candidate_run, 
 from turboragger.calibration import calibrate_rank_score_fusion_parameters, calibrate_score_fusion_weights
 from turboragger.data import find_nfcorpus, load_nfcorpus, load_nfcorpus_qrels
 from turboragger.dense import (
+    DensePrfRetriever,
     MiniLMDenseRetriever,
     OnnxDenseRetriever,
     TransformerDenseRetriever,
@@ -82,6 +83,7 @@ def main() -> int:
             "scifact_finetuned_minilm",
             "scifact_dev_selected_minilm",
             "bge_small_en_onnx",
+            "bge_small_en_onnx_dense_prf",
             "bge_small_en_bm25_rrf",
             "bge_small_minilm_bm25_rrf",
             "bge_small_minilm_bm25_prf_rrf",
@@ -717,6 +719,54 @@ def build_candidate(
             },
             {"onnxruntime": _probe_module("onnxruntime"), "tokenizers": _probe_module("tokenizers")},
             {"k": TOP_K, "max_length": 512, "batch_size": 64, "pooling": "cls"},
+        )
+
+    if candidate_name == "bge_small_en_onnx_dense_prf":
+        if not BGE_SMALL_EN_ONNX_PATH.is_dir():
+            raise FileNotFoundError(f"Local BGE ONNX path not found: {BGE_SMALL_EN_ONNX_PATH}")
+        base_retriever = OnnxDenseRetriever(
+            corpus,
+            model_path=BGE_SMALL_EN_ONNX_PATH,
+            source="bge_small_en_onnx_base_for_dense_prf",
+            batch_size=64,
+            max_length=512,
+            pooling="cls",
+            query_prefix="Represent this sentence for searching relevant passages: ",
+        )
+        return (
+            {
+                "bge_small_en_onnx_dense_prf": DensePrfRetriever(
+                    base_retriever,
+                    source="bge_small_en_onnx_dense_prf",
+                    feedback_docs=10,
+                    query_weight=1.0,
+                    feedback_weight=0.5,
+                )
+            },
+            "dense_prf",
+            {
+                "model": BGE_SMALL_EN_ONNX_MODEL,
+                "model_path": str(BGE_SMALL_EN_ONNX_PATH),
+                "mode": "bge_small_en_onnx_dense_pseudo_relevance_feedback",
+                "top_k": TOP_K,
+                "max_length": 512,
+                "pooling": "cls",
+                "feedback_docs": 10,
+                "query_weight": 1.0,
+                "feedback_weight": 0.5,
+                "bge_query_prefix": "Represent this sentence for searching relevant passages: ",
+                "note": "Qrels-free dense pseudo-relevance feedback: initial BGE-small ONNX top documents shift the query vector before final retrieval.",
+            },
+            {"onnxruntime": _probe_module("onnxruntime"), "tokenizers": _probe_module("tokenizers")},
+            {
+                "k": TOP_K,
+                "max_length": 512,
+                "batch_size": 64,
+                "pooling": "cls",
+                "feedback_docs": 10,
+                "query_weight": 1.0,
+                "feedback_weight": 0.5,
+            },
         )
 
     if candidate_name == "bge_small_en_bm25_rrf":

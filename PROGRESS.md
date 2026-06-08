@@ -810,6 +810,39 @@ Continue methodology work without expanding scope prematurely:
   - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
   - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
 
+### 2026-06-08 Continuation - BGE-Small Dense PRF Query Expansion
+
+- Reconfirmed `GOAL.md`, `OPTIMIZE_CHECKLIST.md`, `CANDIDATE_BOARD.md`, `REPO_MAP.md`, `RISK_NOTES.md`, `RANKED_OPTIONS.md`, `artifacts/leaderboard.json`, `artifacts/local_model_inventory.json`, `artifacts/sota_target.json`, `artifacts/baseline_minilm_nfcorpus.json`, and `artifacts/environment_probe.json`.
+- Ran a broader read-only local search for stronger retrieval/reranking paths:
+  - searched Hugging Face caches and sibling workspaces for BGE-M3, Qwen3 embedding, Nomic, E5/GTE, NV-Embed, rerankers, cross-encoders, MiniCPM, SPLADE, and ColBERT names;
+  - found only already-measured local checkpoints, the incomplete BGE-M3 stub, unrelated Qwen language-model caches, and existing documentation/code references.
+- Added `dense_prf_query_vector` and `DensePrfRetriever` to `src/turboragger/dense.py`.
+- Added `bge_small_en_onnx_dense_prf` to `scripts/run_nfcorpus_candidate.py`.
+- The branch performs qrels-free dense pseudo-relevance feedback: it encodes the BGE-small ONNX query, retrieves initial top documents, shifts the query vector toward the top-10 document-vector centroid, then retrieves the final top 100.
+- TDD red checks:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_dense.py' -v`: failed before helper implementation with `ImportError: cannot import name 'dense_prf_query_vector'`.
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: failed before runner wiring because `run_nfcorpus_candidate` had no `DensePrfRetriever` attribute.
+- Focused green checks:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_dense.py' -v`: 6 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_candidate_runner.py' -v`: 30 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+- Benchmark command exited 0:
+  - `PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_small_en_onnx_dense_prf`
+- Generated `artifacts/runs/bge_small_en_onnx_dense_prf_20260608T212303Z.json`.
+- Updated `artifacts/leaderboard.json`.
+- Test result: `nDCG@10 = 0.3425690018844359`, `Recall@100 = 0.3105355971312376`, 323 queries, 0 failures, runtime `144.642333` seconds.
+- This branch is not promoted because it loses `0.02501404082350972` primary `nDCG@10` and `0.022342985572541607` `Recall@100` versus the current best.
+- It improves direct BGE-small ONNX by only `0.0003240370649028601` absolute `nDCG@10` while lowering direct BGE-small recall by `0.0015122627919349485`.
+- Current best remains `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion`.
+- Current gap to selected SOTA target remains `0.10231695729205437`.
+- Full verification after the BGE-small dense PRF branch and docs update:
+  - `PYTHONPATH=src python3 -m unittest discover -s tests -v`: 86 tests, 0 failures.
+  - `PYTHONPATH=src python3 -m compileall -q src scripts`: exited 0.
+  - JSON validation exited 0 for the dense PRF run, current-best train/dev GBDT regression score-fusion run, leaderboard, SOTA target, and local model inventory.
+  - Root `git diff --check`: exited 0.
+  - Child repo `git diff --check` commands exited 0 for `turbovec`, `Agent_Pidgeon`, `newragcity`, and `codex-chatgpt-control`.
+  - Child repo status checks are clean except `turbovec`, which still reports only known untracked `?? .DS_Store`.
+
 ### 2026-06-08 Continuation - Late-Interaction Rerank Candidate Wiring
 
 - Added `src/turboragger/late_interaction.py`.

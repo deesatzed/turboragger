@@ -131,6 +131,31 @@ class CandidateRunnerTests(unittest.TestCase):
         self.assertEqual(dense.call_args.kwargs["pooling"], "cls")
         self.assertIn("direct_transformers", dependency)
 
+    def test_bge_dense_prf_candidate_wraps_onnx_dense_retriever(self):
+        runner = load_candidate_runner()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            model_path = Path(temp_dir)
+            with (
+                mock.patch.object(runner, "BGE_SMALL_EN_ONNX_PATH", model_path),
+                mock.patch.object(runner, "OnnxDenseRetriever", return_value=StaticRetriever()) as dense,
+                mock.patch.object(runner, "DensePrfRetriever", return_value=StaticRetriever()) as prf,
+            ):
+                retrievers, mode, config, dependency, hyperparameters = runner.build_candidate(
+                    "bge_small_en_onnx_dense_prf",
+                    {"d1": {"title": "title", "text": "text"}},
+                )
+
+        self.assertEqual(mode, "dense_prf")
+        self.assertEqual(list(retrievers), ["bge_small_en_onnx_dense_prf"])
+        self.assertEqual(config["mode"], "bge_small_en_onnx_dense_pseudo_relevance_feedback")
+        self.assertEqual(config["feedback_docs"], 10)
+        self.assertEqual(config["feedback_weight"], 0.5)
+        self.assertEqual(hyperparameters["query_weight"], 1.0)
+        self.assertEqual(hyperparameters["feedback_weight"], 0.5)
+        self.assertIn("onnxruntime", dependency)
+        self.assertEqual(dense.call_args.kwargs["pooling"], "cls")
+        self.assertEqual(prf.call_args.kwargs["feedback_docs"], 10)
+
     def test_scifact_finetuned_minilm_candidate_uses_local_domain_checkpoint(self):
         runner = load_candidate_runner()
         with tempfile.TemporaryDirectory() as temp_dir:
