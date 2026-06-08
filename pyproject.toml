@@ -1,0 +1,10 @@
+[project]
+name = "turboragger"
+version = "0.0.0"
+description = "Local benchmark harness for staged RAG retrieval methodology experiments."
+requires-python = ">=3.11"
+
+[tool.turboragger.commands]
+test = "PYTHONPATH=src python3 -m unittest discover -s tests -v"
+probe = "PYTHONPATH=src python3 scripts/probe_environment.py"
+baseline = "PYTHONPATH=src python3 scripts/run_nfcorpus_baseline.py"

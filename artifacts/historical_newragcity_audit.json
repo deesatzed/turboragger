@@ -1,0 +1,23 @@
+{
+  "claim": "newragcity historical BEIR NFCorpus unified result",
+  "claimed_metrics": {
+    "Recall@100": 0.18392811903482234,
+    "nDCG@10": 0.5085946124009167
+  },
+  "conclusion": "The saved historical score is not comparable SOTA evidence. It must be rerun through the root benchmark harness or another corrected metric implementation.",
+  "has_retrieved_doc_ids": false,
+  "issues": [
+    "missing_retrieved_doc_ids",
+    "recall_above_one",
+    "top10_only_idcg",
+    "recall_double_count_risk"
+  ],
+  "queries_tested": 323,
+  "recall_gt_1_count": 12,
+  "recall_max": 2.0,
+  "rescore_possible_from_saved_artifact": false,
+  "result_path": "/Volumes/WS4TB/turboragger/newragcity/ersatz_rag/regulus/backend/benchmarks/results/beir_unified_results.json",
+  "schema_version": 1,
+  "source_path": "/Volumes/WS4TB/turboragger/newragcity/ersatz_rag/regulus/backend/benchmarks/beir_unified_benchmark.py",
+  "verdict": "invalid"
+}

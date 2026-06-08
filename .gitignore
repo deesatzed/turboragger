@@ -1,0 +1,34 @@
+# Python/runtime caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local environments and secrets
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+env/
+
+# OS/editor files
+.DS_Store
+._*
+.idea/
+.vscode/
+*.swp
+*.log
+
+# Generated heavy local indexes
+.leann_home/
+artifacts/leann_indexes/
+
+# Nested source/reference repos managed separately
+Agent_Pidgeon/
+codex-chatgpt-control/
+newragcity/
+turbovec/

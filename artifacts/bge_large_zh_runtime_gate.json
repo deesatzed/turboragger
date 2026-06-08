@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "timestamp_utc": "2026-06-08T13:43:20Z",
+  "candidate": "bge_large_zh",
+  "model": "BAAI/bge-large-zh-v1.5",
+  "model_path": "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/BAAI/bge-large-zh-v1.5",
+  "command": "PYTHONPATH=src python3 scripts/run_nfcorpus_candidate.py --candidate bge_large_zh",
+  "attempts": [
+    {
+      "max_length": 512,
+      "result": "model_loaded_no_run_artifact_within_bounded_cpu_wait"
+    },
+    {
+      "max_length": 256,
+      "result": "model_loaded_no_run_artifact_within_bounded_cpu_wait"
+    }
+  ],
+  "status": "completed_after_long_cpu_runtime",
+  "artifact_written": true,
+  "leaderboard_updated": true,
+  "run_artifact": "artifacts/runs/bge_large_zh_20260608T134449Z.json",
+  "previous_run_artifact": "artifacts/runs/bge_large_zh_20260608T133856Z.json",
+  "runtime_seconds": 411.749291,
+  "metrics": {
+    "nDCG@10": 0.14143051730446513,
+    "Recall@100": 0.16162218356917438
+  },
+  "query_count": 323,
+  "failure_count": 0,
+  "observed": [
+    "Model weights loaded successfully through direct transformers.",
+    "The latest max_length 256 benchmark completed after a long CPU runtime.",
+    "The completed BGE fallback result is worse than MiniLM, BM25, and MiniLM+BM25 RRF on NFCorpus.",
+    "The result was added to artifacts/leaderboard.json, sorted below existing baseline branches."
+  ],
+  "reason": "BGE-large-zh is a Chinese-focused fallback model, not the preferred English/M3 retrieval candidate, and performs poorly on this English NFCorpus setup.",
+  "next_step": "Use an approved stronger English retrieval embedder such as BGE-M3, Qwen3-Embedding, Nomic, E5, or GTE, then rerun through the same candidate artifact schema."
+}

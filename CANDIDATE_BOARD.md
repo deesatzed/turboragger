@@ -1,0 +1,13 @@
+# CANDIDATE_BOARD.md
+
+| Candidate | Type | Parent | Strategy | Status | Expected Gain | Observed Result | Recommendation |
+|---|---|---|---|---|---|---|---|
+| `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion` | implementation attempt | dual-pool BGE + MiniLM + BM25 | training-signal / exploit | promoted current best | use graded relevance targets instead of binary labels | `nDCG@10 = 0.3675830427079456`, `Recall@100 = 0.3328785827037792` | keep as current anchor |
+| `bge_small_late_interaction_score_fusion_rerank` | implementation attempt | current score-fusion pool | late interaction / rerank | implemented, not yet benchmarked | improve top-10 ordering through token-level MaxSim | not measured | run full NFCorpus candidate benchmark before promotion |
+| `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_fusion` | implementation attempt | graded-regression anchor | training-signal / ablation | rejected | test whether graded regressor works as standalone final ranker | `nDCG@10 = 0.36434599974495163`, `Recall@100 = 0.325698652336419` | archive; secondary-only signal |
+| `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_score_fusion` | implementation attempt | dual-pool BGE + MiniLM + BM25 | fusion / exploit | superseded | small gain from GBDT recall signal | `nDCG@10 = 0.3670950977369987`, `Recall@100 = 0.3331795970806332` | retain as comparator |
+| `bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_calibrated_score_fusion` | implementation attempt | current local source set | fusion / exploit | rejected | test whether GBDT works better as a fifth calibrated branch | `nDCG@10 = 0.3660561464830782`, `Recall@100 = 0.32611330897080015` | archive; worse than anchor |
+| `bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_dev_score_fusion` | implementation attempt | current two-ranker GBDT anchor | depth / exploit | rejected | test whether deeper internal pools help top-10 ordering | `nDCG@10 = 0.36562875673411727`, `Recall@100 = 0.33854940883436946` | archive; recall gain only |
+| stronger English embedder | brief | model acquisition | explore | pending external/local availability | large, SOTA-relevant semantic gain | not measured; no complete local BGE-M3/Qwen3/Nomic/E5/GTE snapshot found | highest-priority next line |
+| local reranker | brief | model acquisition | explore | pending external/local availability | top-10 ranking gain | not measured; no complete local reranker found | second-priority next line |
+| same-source calibration variants | brief | current local source set | exploit | deprioritized | small | repeated losses or tiny gains; best latest same-source gain is `+0.00048794497094689637` | avoid unless paired with new signal |

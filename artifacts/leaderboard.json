@@ -1,0 +1,462 @@
+{
+  "best_run": {
+    "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z.json",
+    "candidate": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion",
+    "failure_count": 0,
+    "metrics": {
+      "Recall@100": 0.3328785827037792,
+      "nDCG@10": 0.3675830427079456
+    },
+    "query_count": 323,
+    "retrieval_mode": "multi_dense_sparse_train_dev_gbdt_regression_dev_score_fusion",
+    "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z",
+    "timestamp_utc": "2026-06-08T19:27:56+00:00"
+  },
+  "generated_at_utc": "2026-06-08T19:40:18+00:00",
+  "runs": [
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.3328785827037792,
+        "nDCG@10": 0.3675830427079456
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_train_dev_gbdt_regression_dev_score_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_dev_score_fusion_20260608T192209Z",
+      "timestamp_utc": "2026-06-08T19:27:56+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_score_fusion_20260608T184157Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.3331795970806332,
+        "nDCG@10": 0.3670950977369987
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_train_dev_gbdt_dev_score_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_score_fusion_20260608T184157Z",
+      "timestamp_utc": "2026-06-08T18:48:03+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_score_fusion_20260608T154445Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.3211863718747774,
+        "nDCG@10": 0.36614841346265437
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_score_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_score_fusion_20260608T154445Z",
+      "timestamp_utc": "2026-06-08T15:49:46+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_xenova_minilm_bm25_score_fusion_20260608T144823Z.json",
+      "candidate": "bge_small_xenova_minilm_bm25_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.3162754206179384,
+        "nDCG@10": 0.3660878569380838
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_score_fusion",
+      "run_id": "bge_small_xenova_minilm_bm25_score_fusion_20260608T144823Z",
+      "timestamp_utc": "2026-06-08T14:51:01+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_calibrated_score_fusion_20260608T185555Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_calibrated_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.32611330897080015,
+        "nDCG@10": 0.3660561464830782
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_train_dev_gbdt_dev_calibrated_score_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_calibrated_score_fusion_20260608T185555Z",
+      "timestamp_utc": "2026-06-08T19:04:38+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_rank_score_fusion_20260608T173359Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_rank_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.3220841618662724,
+        "nDCG@10": 0.3659607648002612
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_rank_score_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_rank_score_fusion_20260608T173359Z",
+      "timestamp_utc": "2026-06-08T17:40:23+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_dev_calibrated_rank_score_fusion_20260608T174836Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_dev_calibrated_rank_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.32302981358524474,
+        "nDCG@10": 0.36566973749080495
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_dev_calibrated_rank_score_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_dev_calibrated_rank_score_fusion_20260608T174836Z",
+      "timestamp_utc": "2026-06-08T17:53:48+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_dev_score_fusion_20260608T190950Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_dev_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.33854940883436946,
+        "nDCG@10": 0.36562875673411727
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_deep_train_dev_gbdt_dev_score_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_deep_train_dev_gbdt_dev_score_fusion_20260608T190950Z",
+      "timestamp_utc": "2026-06-08T19:15:56+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_dev_calibrated_score_fusion_20260608T155633Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_dev_calibrated_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.32369539341221953,
+        "nDCG@10": 0.3648389532581644
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_dev_calibrated_score_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_dev_calibrated_score_fusion_20260608T155633Z",
+      "timestamp_utc": "2026-06-08T16:02:14+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_fields_dev_calibrated_score_fusion_20260608T163215Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_fields_dev_calibrated_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.32396224357142317,
+        "nDCG@10": 0.36473218877158997
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_fields_dev_calibrated_score_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_fields_dev_calibrated_score_fusion_20260608T163215Z",
+      "timestamp_utc": "2026-06-08T16:54:03+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_text_score_fusion_20260608T162004Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_text_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.3152911085718485,
+        "nDCG@10": 0.36448715421857897
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_text_score_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_text_score_fusion_20260608T162004Z",
+      "timestamp_utc": "2026-06-08T16:26:43+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_fusion_20260608T193443Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.325698652336419,
+        "nDCG@10": 0.36434599974495163
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_train_dev_gbdt_regression_feature_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_regression_fusion_20260608T193443Z",
+      "timestamp_utc": "2026-06-08T19:40:17+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_mean_xenova_minilm_bm25_score_fusion_20260608T153812Z.json",
+      "candidate": "bge_small_mean_xenova_minilm_bm25_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.31832067766164274,
+        "nDCG@10": 0.3634426387237848
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_score_fusion",
+      "run_id": "bge_small_mean_xenova_minilm_bm25_score_fusion_20260608T153812Z",
+      "timestamp_utc": "2026-06-08T15:41:23+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_fusion_20260608T181638Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.32849490503295947,
+        "nDCG@10": 0.36273469704993305
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_train_dev_gbdt_feature_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_fusion_20260608T181638Z",
+      "timestamp_utc": "2026-06-08T18:22:36+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_minilm_bm25_score_fusion_20260608T142822Z.json",
+      "candidate": "bge_small_minilm_bm25_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.3194178792738884,
+        "nDCG@10": 0.3622186429303806
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_score_fusion",
+      "run_id": "bge_small_minilm_bm25_score_fusion_20260608T142822Z",
+      "timestamp_utc": "2026-06-08T14:30:59+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_cascade_20260608T183008Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_cascade",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.32849490503295947,
+        "nDCG@10": 0.36218572616170835
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_train_dev_gbdt_dev_cascade",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_gbdt_dev_cascade_20260608T183008Z",
+      "timestamp_utc": "2026-06-08T18:36:14+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_xenova_minilm_bm25_deep_score_fusion_20260608T152801Z.json",
+      "candidate": "bge_small_xenova_minilm_bm25_deep_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.3273489539542475,
+        "nDCG@10": 0.3621651141202009
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_deep_score_fusion",
+      "run_id": "bge_small_xenova_minilm_bm25_deep_score_fusion_20260608T152801Z",
+      "timestamp_utc": "2026-06-08T15:31:17+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_xenova_minilm_bm25_mnz_fusion_20260608T151744Z.json",
+      "candidate": "bge_small_xenova_minilm_bm25_mnz_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.31779820735251124,
+        "nDCG@10": 0.3594854251733051
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_mnz_fusion",
+      "run_id": "bge_small_xenova_minilm_bm25_mnz_fusion_20260608T151744Z",
+      "timestamp_utc": "2026-06-08T15:21:37+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_train_dev_learned_fusion_20260608T180407Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_learned_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.31843407013584935,
+        "nDCG@10": 0.35887473712153073
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_train_dev_learned_linear_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_train_dev_learned_fusion_20260608T180407Z",
+      "timestamp_utc": "2026-06-08T18:09:57+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_pool_xenova_minilm_bm25_title_score_fusion_20260608T160744Z.json",
+      "candidate": "bge_small_dual_pool_xenova_minilm_bm25_title_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.312460387549029,
+        "nDCG@10": 0.3568054177005105
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_title_score_fusion",
+      "run_id": "bge_small_dual_pool_xenova_minilm_bm25_title_score_fusion_20260608T160744Z",
+      "timestamp_utc": "2026-06-08T16:13:35+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_minilm_bm25_rrf_20260608T140218Z.json",
+      "candidate": "bge_small_minilm_bm25_rrf",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.32206494945280123,
+        "nDCG@10": 0.3563276091075661
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_rrf",
+      "run_id": "bge_small_minilm_bm25_rrf_20260608T140218Z",
+      "timestamp_utc": "2026-06-08T14:04:57+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_dual_minilm_bm25_score_fusion_20260608T150916Z.json",
+      "candidate": "bge_small_dual_minilm_bm25_score_fusion",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.322866194510992,
+        "nDCG@10": 0.3559227197172415
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_score_fusion",
+      "run_id": "bge_small_dual_minilm_bm25_score_fusion_20260608T150916Z",
+      "timestamp_utc": "2026-06-08T15:12:15+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_minilm_bm25_prf_rrf_20260608T141628Z.json",
+      "candidate": "bge_small_minilm_bm25_prf_rrf",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.3208886711792187,
+        "nDCG@10": 0.34788409229565553
+      },
+      "query_count": 323,
+      "retrieval_mode": "multi_dense_sparse_prf_rrf",
+      "run_id": "bge_small_minilm_bm25_prf_rrf_20260608T141628Z",
+      "timestamp_utc": "2026-06-08T14:19:10+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_en_bm25_rrf_20260608T135851Z.json",
+      "candidate": "bge_small_en_bm25_rrf",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.30287197379472947,
+        "nDCG@10": 0.3429287918550373
+      },
+      "query_count": 323,
+      "retrieval_mode": "dense_onnx_sparse_rrf",
+      "run_id": "bge_small_en_bm25_rrf_20260608T135851Z",
+      "timestamp_utc": "2026-06-08T14:01:13+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_small_en_onnx_20260608T135538Z.json",
+      "candidate": "bge_small_en_onnx",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.3120478599231725,
+        "nDCG@10": 0.34224496481953304
+      },
+      "query_count": 323,
+      "retrieval_mode": "dense_onnx",
+      "run_id": "bge_small_en_onnx_20260608T135538Z",
+      "timestamp_utc": "2026-06-08T13:57:54+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/minilm_bm25_rrf_20260608T132506Z.json",
+      "candidate": "minilm_bm25_rrf",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.3121492868681654,
+        "nDCG@10": 0.3344802256991052
+      },
+      "query_count": 323,
+      "retrieval_mode": "dense_sparse_rrf",
+      "run_id": "minilm_bm25_rrf_20260608T132506Z",
+      "timestamp_utc": "2026-06-08T13:25:24+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/xenova_minilm_onnx_20260608T144741Z.json",
+      "candidate": "xenova_minilm_onnx",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.30671003953431614,
+        "nDCG@10": 0.31689265638802383
+      },
+      "query_count": 323,
+      "retrieval_mode": "dense_onnx",
+      "run_id": "xenova_minilm_onnx_20260608T144741Z",
+      "timestamp_utc": "2026-06-08T14:48:00+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/minilm_dense_20260608T132449Z.json",
+      "candidate": "minilm_dense",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.31150992401169303,
+        "nDCG@10": 0.3160012178022206
+      },
+      "query_count": 323,
+      "retrieval_mode": "dense",
+      "run_id": "minilm_dense_20260608T132449Z",
+      "timestamp_utc": "2026-06-08T13:25:06+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/leann_minilm_no_recompute_20260608T145957Z.json",
+      "candidate": "leann_minilm_no_recompute",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.3111533551882048,
+        "nDCG@10": 0.3138633685494098
+      },
+      "query_count": 323,
+      "retrieval_mode": "leann_dense_hnsw_no_recompute",
+      "run_id": "leann_minilm_no_recompute_20260608T145957Z",
+      "timestamp_utc": "2026-06-08T15:05:14+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bm25_20260608T132446Z.json",
+      "candidate": "bm25",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.23307829323957305,
+        "nDCG@10": 0.3064137649277972
+      },
+      "query_count": 323,
+      "retrieval_mode": "lexical",
+      "run_id": "bm25_20260608T132446Z",
+      "timestamp_utc": "2026-06-08T13:24:49+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bm25_prf_20260608T141609Z.json",
+      "candidate": "bm25_prf",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.22671140398062603,
+        "nDCG@10": 0.2643284676291605
+      },
+      "query_count": 323,
+      "retrieval_mode": "lexical_prf",
+      "run_id": "bm25_prf_20260608T141609Z",
+      "timestamp_utc": "2026-06-08T14:16:16+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bce_embedding_base_v1_20260608T171437Z.json",
+      "candidate": "bce_embedding_base_v1",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.27654921213670386,
+        "nDCG@10": 0.2621479854747279
+      },
+      "query_count": 323,
+      "retrieval_mode": "dense",
+      "run_id": "bce_embedding_base_v1_20260608T171437Z",
+      "timestamp_utc": "2026-06-08T17:18:24+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_large_zh_20260608T134449Z.json",
+      "candidate": "bge_large_zh",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.16162218356917438,
+        "nDCG@10": 0.14143051730446513
+      },
+      "query_count": 323,
+      "retrieval_mode": "dense",
+      "run_id": "bge_large_zh_20260608T134449Z",
+      "timestamp_utc": "2026-06-08T13:51:41+00:00"
+    },
+    {
+      "artifact_path": "artifacts/runs/bge_large_zh_20260608T133856Z.json",
+      "candidate": "bge_large_zh",
+      "failure_count": 0,
+      "metrics": {
+        "Recall@100": 0.14200401732771825,
+        "nDCG@10": 0.09073591720752772
+      },
+      "query_count": 323,
+      "retrieval_mode": "dense",
+      "run_id": "bge_large_zh_20260608T133856Z",
+      "timestamp_utc": "2026-06-08T13:50:15+00:00"
+    }
+  ],
+  "schema_version": 1,
+  "sort_key": "nDCG@10 desc"
+}

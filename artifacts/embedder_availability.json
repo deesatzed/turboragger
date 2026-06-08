@@ -1,0 +1,351 @@
+{
+  "cache_roots": [
+    "/Users/o2satz/.cache/huggingface/hub"
+  ],
+  "candidates": [
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--BAAI--bge-m3/snapshots",
+          "status": "missing"
+        },
+        {
+          "complete": false,
+          "exists": true,
+          "files_present": [
+            "modules.json",
+            "sentence_bert_config.json"
+          ],
+          "is_dir": true,
+          "missing_files": [
+            "config.json",
+            "tokenizer.json or vocab.txt or sentencepiece.bpe.model or spiece.model",
+            "model.safetensors or pytorch_model.bin"
+          ],
+          "path": "/Volumes/WS4TB/WS4TBr/Partial_Apps_WS/dec24_apps/MedAiTools/bge-m3",
+          "status": "incomplete"
+        }
+      ],
+      "complete_paths": [],
+      "explicit_paths": [
+        "/Volumes/WS4TB/WS4TBr/Partial_Apps_WS/dec24_apps/MedAiTools/bge-m3"
+      ],
+      "family": "BGE-M3",
+      "model_id": "BAAI/bge-m3",
+      "priority": 1,
+      "reason": "Goal-prioritized dense/sparse/ColBERT-capable embedder.",
+      "status": "missing_or_incomplete"
+    },
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--Qwen--Qwen3-Embedding-0.6B/snapshots",
+          "status": "missing"
+        }
+      ],
+      "complete_paths": [],
+      "explicit_paths": [],
+      "family": "Qwen3-Embedding",
+      "model_id": "Qwen/Qwen3-Embedding-0.6B",
+      "priority": 2,
+      "reason": "Goal-prioritized newer general embedder candidate.",
+      "status": "missing_or_incomplete"
+    },
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--nomic-ai--nomic-embed-text-v1.5/snapshots",
+          "status": "missing"
+        }
+      ],
+      "complete_paths": [],
+      "explicit_paths": [],
+      "family": "Nomic",
+      "model_id": "nomic-ai/nomic-embed-text-v1.5",
+      "priority": 3,
+      "reason": "Earlier project handoff claimed a Nomic embedder may exist on disk.",
+      "status": "missing_or_incomplete"
+    },
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--intfloat--e5-large-v2/snapshots",
+          "status": "missing"
+        }
+      ],
+      "complete_paths": [],
+      "explicit_paths": [],
+      "family": "E5",
+      "model_id": "intfloat/e5-large-v2",
+      "priority": 4,
+      "reason": "Strong general dense retrieval baseline candidate.",
+      "status": "missing_or_incomplete"
+    },
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--Alibaba-NLP--gte-large-en-v1.5/snapshots",
+          "status": "missing"
+        }
+      ],
+      "complete_paths": [],
+      "explicit_paths": [],
+      "family": "GTE",
+      "model_id": "Alibaba-NLP/gte-large-en-v1.5",
+      "priority": 5,
+      "reason": "Strong general dense retrieval baseline candidate.",
+      "status": "missing_or_incomplete"
+    },
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--BAAI--bge-large-zh-v1.5/snapshots",
+          "status": "missing"
+        },
+        {
+          "complete": true,
+          "exists": true,
+          "files_present": [
+            ".cache",
+            ".gitattributes",
+            "1_Pooling",
+            "README.md",
+            "config.json",
+            "config_sentence_transformers.json",
+            "modules.json",
+            "pytorch_model.bin",
+            "sentence_bert_config.json",
+            "special_tokens_map.json",
+            "tokenizer.json",
+            "tokenizer_config.json",
+            "vocab.txt"
+          ],
+          "is_dir": true,
+          "missing_files": [],
+          "path": "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/BAAI/bge-large-zh-v1.5",
+          "status": "complete"
+        }
+      ],
+      "complete_paths": [
+        "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/BAAI/bge-large-zh-v1.5"
+      ],
+      "explicit_paths": [
+        "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/BAAI/bge-large-zh-v1.5"
+      ],
+      "family": "BGE",
+      "model_id": "BAAI/bge-large-zh-v1.5",
+      "priority": 6,
+      "reason": "Complete local BGE snapshot discovered under sibling ragflow cache; not the preferred English/M3 model, but a runnable stronger BGE-family dense candidate.",
+      "status": "available"
+    },
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--Xenova--bge-small-en-v1.5/snapshots",
+          "status": "missing"
+        },
+        {
+          "complete": true,
+          "exists": true,
+          "files_present": [
+            "config.json",
+            "onnx",
+            "tokenizer.json",
+            "tokenizer_config.json"
+          ],
+          "is_dir": true,
+          "missing_files": [],
+          "path": "/Volumes/WS4TB/WS4TBr/finESS/node_modules/@xenova/transformers/.cache/Xenova/bge-small-en-v1.5",
+          "status": "complete"
+        },
+        {
+          "complete": true,
+          "exists": true,
+          "files_present": [
+            "config.json",
+            "onnx",
+            "tokenizer.json",
+            "tokenizer_config.json"
+          ],
+          "is_dir": true,
+          "missing_files": [],
+          "path": "/Volumes/WS4TB/WS4TBr/finESS/data/.cache/transformers/Xenova/bge-small-en-v1.5",
+          "status": "complete"
+        }
+      ],
+      "complete_paths": [
+        "/Volumes/WS4TB/WS4TBr/finESS/node_modules/@xenova/transformers/.cache/Xenova/bge-small-en-v1.5",
+        "/Volumes/WS4TB/WS4TBr/finESS/data/.cache/transformers/Xenova/bge-small-en-v1.5"
+      ],
+      "explicit_paths": [
+        "/Volumes/WS4TB/WS4TBr/finESS/node_modules/@xenova/transformers/.cache/Xenova/bge-small-en-v1.5",
+        "/Volumes/WS4TB/WS4TBr/finESS/data/.cache/transformers/Xenova/bge-small-en-v1.5"
+      ],
+      "family": "BGE",
+      "model_id": "Xenova/bge-small-en-v1.5",
+      "priority": 7,
+      "reason": "Complete local English BGE ONNX fallback discovered under finESS cache.",
+      "status": "available"
+    }
+  ],
+  "command": "PYTHONPATH=src python3 scripts/probe_embedders.py",
+  "runnable_candidates": [
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--BAAI--bge-large-zh-v1.5/snapshots",
+          "status": "missing"
+        },
+        {
+          "complete": true,
+          "exists": true,
+          "files_present": [
+            ".cache",
+            ".gitattributes",
+            "1_Pooling",
+            "README.md",
+            "config.json",
+            "config_sentence_transformers.json",
+            "modules.json",
+            "pytorch_model.bin",
+            "sentence_bert_config.json",
+            "special_tokens_map.json",
+            "tokenizer.json",
+            "tokenizer_config.json",
+            "vocab.txt"
+          ],
+          "is_dir": true,
+          "missing_files": [],
+          "path": "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/BAAI/bge-large-zh-v1.5",
+          "status": "complete"
+        }
+      ],
+      "complete_paths": [
+        "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/BAAI/bge-large-zh-v1.5"
+      ],
+      "explicit_paths": [
+        "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/BAAI/bge-large-zh-v1.5"
+      ],
+      "family": "BGE",
+      "model_id": "BAAI/bge-large-zh-v1.5",
+      "priority": 6,
+      "reason": "Complete local BGE snapshot discovered under sibling ragflow cache; not the preferred English/M3 model, but a runnable stronger BGE-family dense candidate.",
+      "status": "available"
+    },
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--Xenova--bge-small-en-v1.5/snapshots",
+          "status": "missing"
+        },
+        {
+          "complete": true,
+          "exists": true,
+          "files_present": [
+            "config.json",
+            "onnx",
+            "tokenizer.json",
+            "tokenizer_config.json"
+          ],
+          "is_dir": true,
+          "missing_files": [],
+          "path": "/Volumes/WS4TB/WS4TBr/finESS/node_modules/@xenova/transformers/.cache/Xenova/bge-small-en-v1.5",
+          "status": "complete"
+        },
+        {
+          "complete": true,
+          "exists": true,
+          "files_present": [
+            "config.json",
+            "onnx",
+            "tokenizer.json",
+            "tokenizer_config.json"
+          ],
+          "is_dir": true,
+          "missing_files": [],
+          "path": "/Volumes/WS4TB/WS4TBr/finESS/data/.cache/transformers/Xenova/bge-small-en-v1.5",
+          "status": "complete"
+        }
+      ],
+      "complete_paths": [
+        "/Volumes/WS4TB/WS4TBr/finESS/node_modules/@xenova/transformers/.cache/Xenova/bge-small-en-v1.5",
+        "/Volumes/WS4TB/WS4TBr/finESS/data/.cache/transformers/Xenova/bge-small-en-v1.5"
+      ],
+      "explicit_paths": [
+        "/Volumes/WS4TB/WS4TBr/finESS/node_modules/@xenova/transformers/.cache/Xenova/bge-small-en-v1.5",
+        "/Volumes/WS4TB/WS4TBr/finESS/data/.cache/transformers/Xenova/bge-small-en-v1.5"
+      ],
+      "family": "BGE",
+      "model_id": "Xenova/bge-small-en-v1.5",
+      "priority": 7,
+      "reason": "Complete local English BGE ONNX fallback discovered under finESS cache.",
+      "status": "available"
+    }
+  ],
+  "schema_version": 1,
+  "status": "available",
+  "timestamp_utc": "2026-06-08T13:55:32+00:00"
+}

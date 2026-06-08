@@ -1,0 +1,648 @@
+{
+  "benchmarked_model_dirs": [
+    "/Users/o2satz/.cache/huggingface/hub/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf",
+    "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/BAAI/bge-large-zh-v1.5",
+    "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/maidalun1020/bce-embedding-base_v1",
+    "/Volumes/WS4TB/WS4TBr/finESS/node_modules/@xenova/transformers/.cache/Xenova/bge-small-en-v1.5",
+    "/Volumes/WS4TB/WS4TBr/whsjan14/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2"
+  ],
+  "command": "PYTHONPATH=src python3 scripts/probe_local_model_inventory.py",
+  "model_files": [
+    {
+      "benchmarked": false,
+      "category": "known_measured_local_model",
+      "filename": "model_quantized.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/ACA_gap/server/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2",
+      "path": "/Volumes/WS4TB/WS4TBr/ACA_gap/server/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2/onnx/model_quantized.onnx",
+      "signals": [
+        "all-minilm-l6-v2"
+      ],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/AEGIS/MLX-GRPO/mlx_model",
+      "path": "/Volumes/WS4TB/WS4TBr/AEGIS/MLX-GRPO/mlx_model/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/AEGIS/MLX-GRPO/outputs/smoke-test/smoke-test-run/checkpoint-25",
+      "path": "/Volumes/WS4TB/WS4TBr/AEGIS/MLX-GRPO/outputs/smoke-test/smoke-test-run/checkpoint-25/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/AEGIS/MLX-GRPO/outputs/smoke-test/smoke-test-run/checkpoint-50",
+      "path": "/Volumes/WS4TB/WS4TBr/AEGIS/MLX-GRPO/outputs/smoke-test/smoke-test-run/checkpoint-50/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-100",
+      "path": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-100/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-125",
+      "path": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-125/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-150",
+      "path": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-150/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-175",
+      "path": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-175/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-200",
+      "path": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-200/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-25",
+      "path": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-25/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-50",
+      "path": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-50/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-75",
+      "path": "/Volumes/WS4TB/WS4TBr/AEGIS/outputs/aegis-learn/checkpoint-75/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-18",
+      "path": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-18/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-27",
+      "path": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-27/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-36",
+      "path": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-36/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-45",
+      "path": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-45/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-9",
+      "path": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/checkpoint-9/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned",
+      "path": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/output/scifact-finetuned/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": true,
+      "category": "known_measured_local_model",
+      "filename": "pytorch_model.bin",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/BAAI/bge-large-zh-v1.5",
+      "path": "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/BAAI/bge-large-zh-v1.5/pytorch_model.bin",
+      "signals": [
+        "bge-large-zh-v1.5"
+      ],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": true,
+      "category": "goal_priority_embedding",
+      "filename": "pytorch_model.bin",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/maidalun1020/bce-embedding-base_v1",
+      "path": "/Volumes/WS4TB/WS4TBr/aP2A/ragflow/huggingface.co/maidalun1020/bce-embedding-base_v1/pytorch_model.bin",
+      "signals": [
+        "bce-embedding"
+      ],
+      "sota_relevant": true,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "known_measured_local_model",
+      "filename": "model_quantized.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aWSappFileSearch/ALL_REPOS/whiskysage/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2",
+      "path": "/Volumes/WS4TB/WS4TBr/aWSappFileSearch/ALL_REPOS/whiskysage/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2/onnx/model_quantized.onnx",
+      "signals": [
+        "all-minilm-l6-v2"
+      ],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aWSappFileSearch/aMCPagnoBot/DKR_BU1/deterministic_knowledge_retrieval/.venv/lib/python3.13/site-packages/magika/models/standard_v3_3",
+      "path": "/Volumes/WS4TB/WS4TBr/aWSappFileSearch/aMCPagnoBot/DKR_BU1/deterministic_knowledge_retrieval/.venv/lib/python3.13/site-packages/magika/models/standard_v3_3/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aWSappFileSearch/aMCPagnoBot/deterministic_knowledge_retrieval/.venv/lib/python3.13/site-packages/magika/models/standard_v3_3",
+      "path": "/Volumes/WS4TB/WS4TBr/aWSappFileSearch/aMCPagnoBot/deterministic_knowledge_retrieval/.venv/lib/python3.13/site-packages/magika/models/standard_v3_3/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-100",
+      "path": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-100/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-125",
+      "path": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-125/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-150",
+      "path": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-150/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-175",
+      "path": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-175/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-200",
+      "path": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-200/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-25",
+      "path": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-25/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-50",
+      "path": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-50/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-75",
+      "path": "/Volumes/WS4TB/WS4TBr/aegisHopbu11_1/AEGIS/outputs/aegis-learn/checkpoint-75/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/deterministic_knowledge_retrieval/.venv/lib/python3.13/site-packages/magika/models/standard_v3_3",
+      "path": "/Volumes/WS4TB/WS4TBr/deterministic_knowledge_retrieval/.venv/lib/python3.13/site-packages/magika/models/standard_v3_3/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "known_measured_local_model",
+      "filename": "model_quantized.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/finESS/data/.cache/transformers/Xenova/bge-small-en-v1.5",
+      "path": "/Volumes/WS4TB/WS4TBr/finESS/data/.cache/transformers/Xenova/bge-small-en-v1.5/onnx/model_quantized.onnx",
+      "signals": [
+        "bge-small-en-v1.5"
+      ],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": true,
+      "category": "known_measured_local_model",
+      "filename": "model_quantized.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/finESS/node_modules/@xenova/transformers/.cache/Xenova/bge-small-en-v1.5",
+      "path": "/Volumes/WS4TB/WS4TBr/finESS/node_modules/@xenova/transformers/.cache/Xenova/bge-small-en-v1.5/onnx/model_quantized.onnx",
+      "signals": [
+        "bge-small-en-v1.5"
+      ],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/snipperdoodle/deterministic_knowledge_retrieval/.venv/lib/python3.13/site-packages/magika/models/standard_v3_3",
+      "path": "/Volumes/WS4TB/WS4TBr/snipperdoodle/deterministic_knowledge_retrieval/.venv/lib/python3.13/site-packages/magika/models/standard_v3_3/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-100",
+      "path": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-100/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-125",
+      "path": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-125/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-150",
+      "path": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-150/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-175",
+      "path": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-175/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-200",
+      "path": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-200/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-25",
+      "path": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-25/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-50",
+      "path": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-50/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-75",
+      "path": "/Volumes/WS4TB/WS4TBr/vam114/AEGIS/outputs/aegis-learn/checkpoint-75/model.safetensors",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "known_measured_local_model",
+      "filename": "model_quantized.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/whiskeysage/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2",
+      "path": "/Volumes/WS4TB/WS4TBr/whiskeysage/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2/onnx/model_quantized.onnx",
+      "signals": [
+        "all-minilm-l6-v2"
+      ],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "known_measured_local_model",
+      "filename": "model_quantized.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/whsgweb/WhiskeySages/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2",
+      "path": "/Volumes/WS4TB/WS4TBr/whsgweb/WhiskeySages/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2/onnx/model_quantized.onnx",
+      "signals": [
+        "all-minilm-l6-v2"
+      ],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": true,
+      "category": "known_measured_local_model",
+      "filename": "model_quantized.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/whsjan14/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2",
+      "path": "/Volumes/WS4TB/WS4TBr/whsjan14/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2/onnx/model_quantized.onnx",
+      "signals": [
+        "all-minilm-l6-v2"
+      ],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "known_measured_local_model",
+      "filename": "model_quantized.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/wstst1117/whiskysage-test-build/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2",
+      "path": "/Volumes/WS4TB/WS4TBr/wstst1117/whiskysage-test-build/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2/onnx/model_quantized.onnx",
+      "signals": [
+        "all-minilm-l6-v2"
+      ],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "known_measured_local_model",
+      "filename": "model_quantized.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/wstst1117/whiskysage/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2",
+      "path": "/Volumes/WS4TB/WS4TBr/wstst1117/whiskysage/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2/onnx/model_quantized.onnx",
+      "signals": [
+        "all-minilm-l6-v2"
+      ],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "known_measured_local_model",
+      "filename": "model_quantized.onnx",
+      "model_dir": "/Volumes/WS4TB/WS4TBr/wstst1117/whs112625/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2",
+      "path": "/Volumes/WS4TB/WS4TBr/wstst1117/whs112625/node_modules/@xenova/transformers/.cache/Xenova/all-MiniLM-L6-v2/onnx/model_quantized.onnx",
+      "signals": [
+        "all-minilm-l6-v2"
+      ],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "general_language_model",
+      "filename": "model.safetensors",
+      "model_dir": "/Volumes/WS4TB/repo421sn/agi/models/qwen2.5-0.5b-hyperspace-v1",
+      "path": "/Volumes/WS4TB/repo421sn/agi/models/qwen2.5-0.5b-hyperspace-v1/model.safetensors",
+      "signals": [
+        "qwen2.",
+        "qwen2.5"
+      ],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/repo421sn/magika/assets/models/begonly_v2_1",
+      "path": "/Volumes/WS4TB/repo421sn/magika/assets/models/begonly_v2_1/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/repo421sn/magika/assets/models/fast_v2_1",
+      "path": "/Volumes/WS4TB/repo421sn/magika/assets/models/fast_v2_1/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/repo421sn/magika/assets/models/standard_v2_0",
+      "path": "/Volumes/WS4TB/repo421sn/magika/assets/models/standard_v2_0/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/repo421sn/magika/assets/models/standard_v2_1",
+      "path": "/Volumes/WS4TB/repo421sn/magika/assets/models/standard_v2_1/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/repo421sn/magika/assets/models/standard_v3_0",
+      "path": "/Volumes/WS4TB/repo421sn/magika/assets/models/standard_v3_0/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/repo421sn/magika/assets/models/standard_v3_1",
+      "path": "/Volumes/WS4TB/repo421sn/magika/assets/models/standard_v3_1/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/repo421sn/magika/assets/models/standard_v3_2",
+      "path": "/Volumes/WS4TB/repo421sn/magika/assets/models/standard_v3_2/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/repo421sn/magika/assets/models/standard_v3_3",
+      "path": "/Volumes/WS4TB/repo421sn/magika/assets/models/standard_v3_3/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    },
+    {
+      "benchmarked": false,
+      "category": "uncategorized_model_file",
+      "filename": "model.onnx",
+      "model_dir": "/Volumes/WS4TB/repo421sn/magika/python/src/magika/models/standard_v3_3",
+      "path": "/Volumes/WS4TB/repo421sn/magika/python/src/magika/models/standard_v3_3/model.onnx",
+      "signals": [],
+      "sota_relevant": false,
+      "unmeasured_sota_candidate": false
+    }
+  ],
+  "roots": [
+    "/Volumes/WS4TB/WS4TBr",
+    "/Volumes/WS4TB/repo421sn",
+    "/Users/o2satz/.cache/huggingface/hub"
+  ],
+  "schema_version": 1,
+  "summary": {
+    "categories": {
+      "general_language_model": 1,
+      "goal_priority_embedding": 1,
+      "known_measured_local_model": 11,
+      "uncategorized_model_file": 46
+    },
+    "file_count": 59,
+    "sota_relevant_count": 1,
+    "unmeasured_sota_candidate_count": 0,
+    "unmeasured_sota_candidate_paths": []
+  },
+  "timestamp_utc": "2026-06-08T17:28:06+00:00"
+}

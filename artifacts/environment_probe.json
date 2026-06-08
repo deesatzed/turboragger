@@ -1,0 +1,91 @@
+{
+  "accelerator": {
+    "mode": "mlx_core_only",
+    "reason": "mlx imports but mlx_lm is unavailable",
+    "usable": false
+  },
+  "command": "PYTHONPATH=src python3 scripts/probe_environment.py",
+  "models": {
+    "all_minilm_l6_v2": {
+      "loader": "direct_transformers_with_optional_kernels_disabled",
+      "snapshot": "/Users/o2satz/.cache/huggingface/hub/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf",
+      "usable": true
+    }
+  },
+  "modules": {
+    "beir": {
+      "usable": true,
+      "version": ""
+    },
+    "mlx": {
+      "usable": true,
+      "version": ""
+    },
+    "mlx_lm": {
+      "error": "[metal::load_device] No Metal device available. This typically occurs in headless, sandboxed, or virtualized macOS sessions where the GPU is not accessible.",
+      "error_type": "RuntimeError",
+      "usable": false
+    },
+    "pytrec_eval": {
+      "usable": true,
+      "version": "0.5.10"
+    },
+    "rank_bm25": {
+      "usable": true,
+      "version": ""
+    },
+    "sentence_transformers": {
+      "error": "Either a revision or a version must be specified.",
+      "error_type": "ValueError",
+      "usable": false
+    },
+    "turbovec": {
+      "error": "No module named 'turbovec'",
+      "error_type": "ModuleNotFoundError",
+      "local_source": {
+        "compiled_extension_exists": false,
+        "compiled_extensions": [],
+        "source_init_exists": true,
+        "source_path": "/Volumes/WS4TB/turboragger/turbovec/turbovec-python/python"
+      },
+      "usable": false
+    }
+  },
+  "nfcorpus": {
+    "checked": [
+      "/Volumes/WS4TB/turboragger/datasets/nfcorpus",
+      "/Volumes/WS4TB/turboragger/data/nfcorpus",
+      "/Volumes/WS4TB/turboragger/newragcity/datasets/nfcorpus",
+      "/Volumes/WS4TB/turboragger/newragcity/data/nfcorpus",
+      "/Volumes/WS4TB/turboragger/newragcity/ersatz_rag/regulus/backend/benchmarks/datasets/nfcorpus",
+      "/Volumes/WS4TB/newragcity/UltraRAG-main/datasets/nfcorpus",
+      "/Volumes/WS4TB/WS4TBr/newragcity/UltraRAG-main/datasets/nfcorpus"
+    ],
+    "fingerprint": {
+      "dataset_sha256": "79cb102227a4395b63e595fb53535b775d71b9e6e17581f342169eb7f97dc4d2",
+      "files": [
+        {
+          "bytes": 6219364,
+          "path": "/Volumes/WS4TB/WS4TBr/newragcity/UltraRAG-main/datasets/nfcorpus/corpus.jsonl",
+          "sha256": "10cc83ef1826b1425e6a87090b5140b39b27755d5a27e48215a88611c899991f"
+        },
+        {
+          "bytes": 441466,
+          "path": "/Volumes/WS4TB/WS4TBr/newragcity/UltraRAG-main/datasets/nfcorpus/queries.jsonl",
+          "sha256": "d024e6621b84925d485ae473d316a0c3af31c62c8068a59fb29d22f7613aef2a"
+        },
+        {
+          "bytes": 279572,
+          "path": "/Volumes/WS4TB/WS4TBr/newragcity/UltraRAG-main/datasets/nfcorpus/qrels/test.tsv",
+          "sha256": "f8fba6ef3d4dd9c3a242a8ba4ae38276fc3622fce7dcbae764766d564542fd2a"
+        }
+      ]
+    },
+    "path": "/Volumes/WS4TB/WS4TBr/newragcity/UltraRAG-main/datasets/nfcorpus",
+    "status": "found"
+  },
+  "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]",
+  "status": "ok",
+  "timestamp_utc": "2026-06-08T13:20:36+00:00"
+}

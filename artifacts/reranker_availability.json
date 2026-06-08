@@ -1,0 +1,142 @@
+{
+  "cache_roots": [
+    "/Users/o2satz/.cache/huggingface/hub"
+  ],
+  "candidates": [
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--openbmb--MiniCPM-Reranker-Light/snapshots",
+          "status": "missing"
+        }
+      ],
+      "complete_paths": [],
+      "explicit_paths": [],
+      "family": "MiniCPM",
+      "model_id": "openbmb/MiniCPM-Reranker-Light",
+      "priority": 1,
+      "reason": "Configured in sibling newragcity reranker service.",
+      "status": "missing_or_incomplete"
+    },
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--BAAI--bge-reranker-base/snapshots",
+          "status": "missing"
+        }
+      ],
+      "complete_paths": [],
+      "explicit_paths": [],
+      "family": "BGE reranker",
+      "model_id": "BAAI/bge-reranker-base",
+      "priority": 2,
+      "reason": "Common local/open reranker candidate.",
+      "status": "missing_or_incomplete"
+    },
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--BAAI--bge-reranker-v2-m3/snapshots",
+          "status": "missing"
+        },
+        {
+          "complete": false,
+          "exists": true,
+          "files_present": [
+            "pipeline_scores.json"
+          ],
+          "is_dir": true,
+          "missing_files": [
+            "config.json",
+            "tokenizer.json or vocab.txt or sentencepiece.bpe.model or spiece.model",
+            "model.safetensors or pytorch_model.bin"
+          ],
+          "path": "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/benchmarks/mteb/results/bge-reranker-v2-m3",
+          "status": "incomplete"
+        }
+      ],
+      "complete_paths": [],
+      "explicit_paths": [
+        "/Volumes/WS4TB/WS4TBr/CPfrac/cam-rag-platform/benchmarks/mteb/results/bge-reranker-v2-m3"
+      ],
+      "family": "BGE reranker",
+      "model_id": "BAAI/bge-reranker-v2-m3",
+      "priority": 3,
+      "reason": "Goal-compatible stronger reranker candidate.",
+      "status": "missing_or_incomplete"
+    },
+    {
+      "checked_paths": [
+        {
+          "complete": false,
+          "exists": false,
+          "files_present": [],
+          "is_dir": false,
+          "missing_files": [
+            "snapshot directory"
+          ],
+          "path": "/Users/o2satz/.cache/huggingface/hub/models--cross-encoder--ms-marco-MiniLM-L-6-v2/snapshots",
+          "status": "missing"
+        }
+      ],
+      "complete_paths": [],
+      "explicit_paths": [],
+      "family": "CrossEncoder",
+      "model_id": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "priority": 4,
+      "reason": "Small sentence-transformers reranker fallback candidate.",
+      "status": "missing_or_incomplete"
+    }
+  ],
+  "command": "PYTHONPATH=src python3 scripts/probe_rerankers.py",
+  "import_status": {
+    "guarded": {
+      "FlagEmbedding": {
+        "usable": true,
+        "version": ""
+      },
+      "sentence_transformers": {
+        "usable": true,
+        "version": "5.5.1"
+      }
+    },
+    "guarded_imports_usable": true,
+    "plain": {
+      "FlagEmbedding": {
+        "error": "Either a revision or a version must be specified.",
+        "error_type": "ValueError",
+        "usable": false
+      },
+      "sentence_transformers": {
+        "error": "Either a revision or a version must be specified.",
+        "error_type": "ValueError",
+        "usable": false
+      }
+    }
+  },
+  "runnable_candidates": [],
+  "schema_version": 1,
+  "status": "no_reranker_available",
+  "timestamp_utc": "2026-06-08T14:12:21+00:00"
+}
